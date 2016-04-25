@@ -777,13 +777,55 @@ class NodeSpecial {
 // walking through linked list (singly), remove duplicates
 
 void RemoveDuplicates(LinkedListNode *head) {
-	
 
+	if (head == nullptr)
+		return;
 
+	// map value in linked list 
+	std::unordered_map<int, bool> hash;
+	hash[head->_val] = true;
+
+	LinkedListNode *curr = head;
+
+	while (curr->next != nullptr)
+	{
+		if (hash.find(curr->next->_val) != hash.end()) // duplicate found
+		{
+			// duplicate
+			LinkedListNode *tmp = curr->next;
+			curr->next = curr->next->next;
+			tmp->next = nullptr;
+			delete tmp;
+		}
+		else //duplicate not found, add val to hash table
+		{
+			hash[curr->next->_val] = true;
+			curr = curr->next;
+		}
+
+	} // while
 }
 
 int main()
 {
+	// Test Code for RemoveDuplicates
+	LinkedListNode *head = new LinkedListNode(1);
+	LinkedListNode *curr = head;
+
+	curr->next = new LinkedListNode(2);
+	curr->next->next = new LinkedListNode(1);
+	curr->next->next->next = new LinkedListNode(3);
+	curr->next->next->next->next = nullptr;
+	
+	RemoveDuplicates(head);
+
+	// print out list
+
+	while (curr != nullptr) {
+		cout << "Linked List Node: " << curr->_val << endl;
+		curr = curr->next;
+	}
+
     return 0;
 }
 
