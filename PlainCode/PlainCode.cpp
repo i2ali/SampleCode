@@ -785,22 +785,27 @@ bool substr(char *sub, char *word) {
 	char *pword = word;
 	char *psub = sub;
 
-	for (; pword++; *pword != '\0' || *psub != '\0') {
+	while (*pword != '\0') {
 		// start matching if the first letters match
 		if (*pword == *psub) {
 			match_counter = 0;
-			while (*pword != '\0') {
-				if (*pword != *psub)
-					break;
+			while (*pword == *psub) {
 				match_counter++;
 				pword++;
 				psub++;
+				if ((*pword == '\0') && (*psub == '\0')) {
+					return true;
+				}
+				else if (*pword == '\0')
+					return false;
 			}
 			if (match_counter == length_sub)
 				return true;
+			if (*pword == '\0') return false;
 			psub = sub;  //reset sub pointer
 		} // if
-	} // for
+		pword++;
+	} // while 
 	return false;
 
 }
@@ -839,8 +844,8 @@ void RemoveDuplicates(LinkedListNode *head) {
 
 int main()
 {
-	// Test Code for RemoveDuplicates
-	LinkedListNode *head = new LinkedListNode(1);
+// Test Code for RemoveDuplicates
+/*	LinkedListNode *head = new LinkedListNode(1);
 	LinkedListNode *curr = head;
 
 	curr->next = new LinkedListNode(2);
@@ -856,6 +861,15 @@ int main()
 		cout << "Linked List Node: " << curr->_val << endl;
 		curr = curr->next;
 	}
+*/
+
+// Test Code for substr
+/*	char *word = "AB";
+	char *sub = "ABC";
+
+	cout << "Is this: " << sub << " a substring of: " << word << " ?" << endl;
+	cout << "Answer: " << substr(sub, word) << endl;
+*/
 
     return 0;
 }
