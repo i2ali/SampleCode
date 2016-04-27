@@ -773,6 +773,37 @@ class NodeSpecial {
 };
 
 // determine if a string is a substring of another string
+// assume each is \0 delimited
+bool substr(char *sub, char *word) {
+	if ((sub == nullptr) || (word == nullptr)) {
+		return false;
+	}
+
+	int match_counter = 0;
+	int length_sub = strlen(sub);
+	// begin points to sub
+	char *pword = word;
+	char *psub = sub;
+
+	for (; pword++; *pword != '\0' || *psub != '\0') {
+		// start matching if the first letters match
+		if (*pword == *psub) {
+			match_counter = 0;
+			while (*pword != '\0') {
+				if (*pword != *psub)
+					break;
+				match_counter++;
+				pword++;
+				psub++;
+			}
+			if (match_counter == length_sub)
+				return true;
+			psub = sub;  //reset sub pointer
+		} // if
+	} // for
+	return false;
+
+}
 
 // walking through linked list (singly), remove duplicates
 
