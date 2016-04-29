@@ -760,7 +760,10 @@ TreeNode * FindPredecessor(TreeNode *root, TreeNode *start) {
 //FindMthNodeinBST
 // use an inorder traversal
 
+
+
 //Return if true/false flag found in a binary tree with child and next pointers
+//
 class NodeSpecial {
 	bool flag;
 	NodeSpecial *next;
@@ -771,6 +774,15 @@ class NodeSpecial {
 		child = nullptr;
 	}
 };
+
+bool TraverseBinarySpecial(NodeSpecial *root) {
+
+
+
+
+
+
+}
 
 // determine if a string is a substring of another string
 // assume each is \0 delimited
