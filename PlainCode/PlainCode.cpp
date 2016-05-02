@@ -533,6 +533,7 @@ void LevelOrderTraversal(TreeNode *root) {
 }
 
 
+
 /*
 Given input file with 4 billion non-negative ints
 algorithm to generate integer not contained in file
@@ -765,22 +766,52 @@ TreeNode * FindPredecessor(TreeNode *root, TreeNode *start) {
 //Return if true/false flag found in a binary tree with child and next pointers
 //
 class NodeSpecial {
+public:
 	bool flag;
 	NodeSpecial *next;
 	NodeSpecial *child;
+	int value;
 	NodeSpecial() { 
 		flag = false; 
 		next = nullptr;
 		child = nullptr;
 	}
+	NodeSpecial(int val) {
+		flag = false;
+		next = nullptr;
+		child = nullptr;
+		value = val;
+	}
 };
 
-bool TraverseBinarySpecial(NodeSpecial *root) {
+NodeSpecial * TraverseBinarySpecial(NodeSpecial *root) {
+	
+	if (root == nullptr)
+		return nullptr;
 
+	if (root->flag) return root; 
 
+	// use a queue to store the TreeNodes
+	std::queue<NodeSpecial *> myqueue;
+	myqueue.push(root);
 
+	while (!myqueue.empty()) {
 
+		int size = myqueue.size(); // only process TreeNodes from last run
+		NodeSpecial *node;
 
+		for (int i = 0; i<size; i++) {
+			node = myqueue.front();
+			while (node) {
+				if (node->flag)
+					return node;
+				if (node->child)
+					myqueue.push(node->child);
+				node = node->next;
+			}
+			myqueue.pop();
+		} // for
+	}
 
 }
 
@@ -881,6 +912,27 @@ int main()
 
 	cout << "Is this: " << sub << " a substring of: " << word << " ?" << endl;
 	cout << "Answer: " << substr(sub, word) << endl;
+*/
+
+// Test code for TraverseBinarySpecial(NodeSpecial *root) {
+
+/*
+	NodeSpecial *ns = new NodeSpecial(1);
+	ns->flag = false;
+	ns->child = new NodeSpecial(5);
+	ns->child->flag = true;
+	ns->child->next = new NodeSpecial(6);
+	ns->child->next->flag = true;
+	ns->next = new NodeSpecial(2);
+	ns->next->flag = false;
+	ns->next->next = new NodeSpecial(3);
+	ns->next->next->flag = false;
+	ns->next->next->next = new NodeSpecial(4);
+	ns->next->next->next->flag = false;
+
+	NodeSpecial *node = TraverseBinarySpecial(ns);
+
+	cout << "Node with: " << node->value << " has true flag" << endl;
 */
 
     return 0;
