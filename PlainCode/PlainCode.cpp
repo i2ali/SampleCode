@@ -760,8 +760,15 @@ TreeNode * FindPredecessor(TreeNode *root, TreeNode *start) {
 
 //FindMthNodeinBST
 // use an inorder traversal
+TreeNode * FindMthNodeinBST(TreeNode *root, int m) {
+	
+	if (root == nullptr)
+		return nullptr;
 
+	FindMthNodeinBST(root->left, m);
 
+	FindMthNodeinBST(root->right, m);
+}
 
 //Return if true/false flag found in a binary tree with child and next pointers
 //
