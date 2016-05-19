@@ -767,6 +767,8 @@ TreeNode * FindMthNodeinBST(TreeNode *root, int m) {
 
 	FindMthNodeinBST(root->left, m);
 
+	cout << "Visit Node: " << root->_data << endl;
+
 	FindMthNodeinBST(root->right, m);
 }
 
@@ -892,6 +894,25 @@ void RemoveDuplicates(LinkedListNode *head) {
 	} // while
 }
 
+/*
+Check if a given tree contains a linked list.
+*/
+
+/*
+Calculate all permutations for an array of integers.
+
+For example : Given{ 3, 5, 8 } -Output should be : { 3, 5, 8 }, { 3, 8, 5 }, { 5, 3, 8 }, { 5, 8, 3 }, { 8, 5, 3 }, { 8, 3, 5 }
+*/
+
+/*
+Given a collection of words, find which of the words exist in a matrix of letters.
+
+Example:
+
+Given the matrix bellow, find the words “ALL” and “LOAN”
+
+*/
+
 int main()
 {
 // Test Code for RemoveDuplicates
@@ -941,6 +962,46 @@ int main()
 
 	cout << "Node with: " << node->value << " has true flag" << endl;
 */
+
+//	Test code for FindMthNodeinBST
+/*
+			   15
+		   8            20
+		 6   9      17      22  
+        4 7   10  16  18  21  23
+
+Inorder visit order:
+		Visit Node: 4
+		Visit Node: 6
+		Visit Node: 7
+		Visit Node: 8
+		Visit Node: 9
+		Visit Node: 10
+		Visit Node: 15
+		Visit Node: 16
+		Visit Node: 17
+		Visit Node: 18
+		Visit Node: 20
+		Visit Node: 21
+		Visit Node: 22
+		Visit Node: 23
+*/
+	TreeNode *root = new TreeNode(15);
+	root->left = new TreeNode(8);
+	root->left->right = new TreeNode(9);
+	root->left->right->right = new TreeNode(10);
+	root->left->left = new TreeNode(6);
+	root->left->left->left = new TreeNode(4);
+	root->left->left->right = new TreeNode(7);
+	root->right = new TreeNode(20);
+	root->right->left = new TreeNode(17);
+	root->right->left->left = new TreeNode(16);
+	root->right->left->right = new TreeNode(18);
+	root->right->right = new TreeNode(22);
+	root->right->right->right = new TreeNode(23);
+	root->right->right->left = new TreeNode(21);
+
+	FindMthNodeinBST(root, 0);
 
     return 0;
 }
