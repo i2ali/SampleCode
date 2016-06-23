@@ -758,20 +758,6 @@ TreeNode * FindPredecessor(TreeNode *root, TreeNode *start) {
 	return pred;
 }
 
-//FindMthNodeinBST
-// use an inorder traversal
-TreeNode * FindMthNodeinBST(TreeNode *root, int m) {
-	
-	if (root == nullptr)
-		return nullptr;
-
-	FindMthNodeinBST(root->left, m);
-
-	cout << "Visit Node: " << root->_data << endl;
-
-	FindMthNodeinBST(root->right, m);
-}
-
 //Return if true/false flag found in a binary tree with child and next pointers
 //
 class NodeSpecial {
@@ -913,6 +899,25 @@ Given the matrix bellow, find the words “ALL” and “LOAN”
 
 */
 
+
+//FindMthNodeinBST
+// use an inorder traversal
+void FindMthNodeinBST(TreeNode *root, int target, int *curr) {
+
+	if (root == nullptr)
+		return;
+
+	FindMthNodeinBST(root->left, target, curr);
+
+	*curr += 1;
+
+	if (*curr == target)
+		cout << "Node: " << root->_data << " is Node number: " << target << endl;
+
+	FindMthNodeinBST(root->right, target, curr);
+}
+
+
 int main()
 {
 // Test Code for RemoveDuplicates
@@ -985,7 +990,7 @@ Inorder visit order:
 		Visit Node: 21
 		Visit Node: 22
 		Visit Node: 23
-*/
+
 	TreeNode *root = new TreeNode(15);
 	root->left = new TreeNode(8);
 	root->left->right = new TreeNode(9);
@@ -1001,8 +1006,11 @@ Inorder visit order:
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
 
-	FindMthNodeinBST(root, 0);
-
+	int curr = 0;
+	FindMthNodeinBST(root, 2, &curr);
+	curr = 0;
+	FindMthNodeinBST(root, 9, &curr);
+*/
     return 0;
 }
 
