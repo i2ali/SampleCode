@@ -909,8 +909,7 @@ void FindMthNodeinBST(TreeNode *root, int target, int *curr) {
 
 	FindMthNodeinBST(root->left, target, curr);
 
-	*curr += 1;
-
+	(*curr)++;
 	if (*curr == target)
 		cout << "Node: " << root->_data << " is Node number: " << target << endl;
 
