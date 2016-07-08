@@ -947,6 +947,34 @@ void FindMthNodeinBST(TreeNode *root, int target, int *curr) {
 	FindMthNodeinBST(root->right, target, curr);
 }
 
+// assume a null terminated string
+// declare string as char str[] = "foobar";
+void reverse(char *str) {
+
+	if (str == nullptr || *str == '\0')
+		return;
+
+	// reverse string in place using two pointers.
+	char *end = str;
+
+	while (*end)
+		end++;
+
+	end--;
+
+	char tmp;
+
+	while (str < end) {
+		tmp = *str;
+		*str = *end;
+		*end = tmp;
+		end--;
+		str++;
+	}
+
+}
+
+
 
 int main()
 {
@@ -1041,6 +1069,13 @@ Inorder visit order:
 	curr = 0;
 	FindMthNodeinBST(root, 9, &curr);
 */
+
+	// Test code for reversestring()
+
+	char str[] = "ABD";
+	reverse(str);
+	cout << "Reversed word: " << str << endl;
+
     return 0;
 }
 
