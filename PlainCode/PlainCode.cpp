@@ -810,9 +810,40 @@ NodeSpecial * TraverseBinarySpecial(NodeSpecial *root) {
 
 }
 
+// is sub a substring of word?
+// uses string C++ class
+bool substr(string sub, string word) {
+
+
+	int wlen = word.length();
+	int slen = sub.length();
+
+	if (slen > wlen || sub.empty() || word.empty())
+		return false;
+
+	int subcount = 0;
+
+	for (int i = 0; i < wlen; i++) {
+
+		while (word[i] == sub[subcount]) {
+			i++;
+			subcount++;
+			if (subcount >= slen || i >= wlen) break;
+		}
+
+		// fully matched
+		if (subcount == slen)
+			return true;
+		else
+			subcount = 0;
+	}
+	return false;
+}
+
 // determine if a string is a substring of another string
 // assume each is \0 delimited
-bool substr(char *sub, char *word) {
+// this implementation is a little more complicated than substr
+bool substr1(char *sub, char *word) {
 	if ((sub == nullptr) || (word == nullptr)) {
 		return false;
 	}
@@ -939,8 +970,8 @@ int main()
 */
 
 // Test Code for substr
-/*	char *word = "AB";
-	char *sub = "ABC";
+/*	char *word = "ABABAB";
+	char *sub = "AC";
 
 	cout << "Is this: " << sub << " a substring of: " << word << " ?" << endl;
 	cout << "Answer: " << substr(sub, word) << endl;
