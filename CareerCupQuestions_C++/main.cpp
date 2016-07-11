@@ -30,7 +30,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	cout << "Number of inversions: " << CountInversions(b, 5) << endl;
 */
-    
+/*    
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);
@@ -42,6 +42,53 @@ int _tmain(int argc, _TCHAR* argv[])
     cout << "FindDistanceinSameBranch: " << FindDistanceinSameBranch(root) << endl;
 
     cout << "DistanceFromNearestLeaf: " << DistanceFromNearestLeaf(root, 1) << endl;
+*/
+
+	/*
+   	          15
+	    8           20
+   	  6    9    17    22
+	4  7    10 16  18 21 23
+
+    */
+	TreeNode *root = new TreeNode(15);
+	root->left = new TreeNode(8);
+	root->left->right = new TreeNode(9);
+	root->left->right->right = new TreeNode(10);
+	root->left->left = new TreeNode(6);
+	root->left->left->left = new TreeNode(4);
+	root->left->left->right = new TreeNode(7);
+	root->right = new TreeNode(20);
+	root->right->left = new TreeNode(17);
+	root->right->left->left = new TreeNode(16);
+	root->right->left->right = new TreeNode(18);
+	root->right->right = new TreeNode(22);
+	root->right->right->right = new TreeNode(23);
+	root->right->right->left = new TreeNode(21);
+
+	TreeNode *minnode = findMinValue(root);
+	if (minnode) cout << "Min Value: " << minnode->_data << endl;
+
+	TreeNode *maxnode = findMaxValue(root);
+	if (maxnode) cout << "Max Value: " << maxnode->_data << endl;
+
+	TreeNode *succ = findNextSuccessor(root, root->right->right->left);
+	if (succ)
+		cout << "Next Successor: " << succ->_data << endl;
+	else
+		cout << "No Successor! " << endl;
+
+	TreeNode *pred = findNextPredecessor(root, root->right->right->left);
+	if (pred)
+		cout << "Next Predecessor: " << pred->_data << endl;
+	else
+		cout << "No Predecessor! " << endl;
+
+	TreeNode *bstresult = findValue(root, 23);
+	if (bstresult)
+		cout << "Found value of: " << bstresult->_data << endl;
+	else
+		cout << "Not found!" << endl;
 
 	return 0;
 }

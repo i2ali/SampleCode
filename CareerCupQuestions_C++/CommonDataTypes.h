@@ -58,6 +58,8 @@ int DistanceFromNearestLeaf(TreeNode *tn, int key);
 int FindDistanceinSameBranch(TreeNode *tn);
 int FindAncestors(TreeNode *root, int index, TreeNode *ancestors[], int value);
 int getMin(int x, int y);
-
-
-
+TreeNode * findMinValue(TreeNode *root);
+TreeNode * findMaxValue(TreeNode *root);
+TreeNode *findNextSuccessor(TreeNode *root, TreeNode *start);
+TreeNode *findNextPredecessor(TreeNode *root, TreeNode *start);
+TreeNode *findValue(TreeNode *root, int val);

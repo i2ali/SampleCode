@@ -86,6 +86,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BSTSuccessorPredecessor.cpp" />
     <ClCompile Include="CountInversions.cpp" />
     <ClCompile Include="DetermineifSumExistsinPath.cpp" />
     <ClCompile Include="DistanceFromNearestLeaf.cpp" />
