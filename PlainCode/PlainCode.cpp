@@ -868,7 +868,7 @@ NodeSpecial * TraverseBinarySpecial(NodeSpecial *root) {
 			myqueue.pop();
 		} // for
 	}
-
+	return nullptr;
 }
 
 // is sub a substring of word?
@@ -1172,7 +1172,7 @@ Inorder visit order:
 	reverse(str);
 	cout << "Reversed word: " << str << endl;
 */
-
+/*
 	// Test Code for DetectCircularLoop
 	LinkedListNode *head = new LinkedListNode(1);
 	LinkedListNode *curr = head;
@@ -1185,11 +1185,12 @@ Inorder visit order:
 	LinkedListNode *startofloop = LinkedListDetectCircularLoop(curr);
 
     return 0;
-*/
 
 // test code for finding all pairs of integers that sum to a particular value
 
 	int test[] = { 7,1,2,8 };
 	findpairs(test, sizeof(test)/sizeof(int), 9);
+
+*/
 }
 
