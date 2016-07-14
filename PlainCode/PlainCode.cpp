@@ -18,19 +18,6 @@ using namespace::std;
 #include <time.h>
 #include <queue>
 
-/*
-class TreeNode {
-public:
-	int _data;
-	TreeNode *left;
-	TreeNode *right;
-	bool visited;
-	TreeNode() { left = NULL; right = NULL; visited = false; }
-	TreeNode(int data) : TreeNode() { _data = data; }
-	TreeNode* getLeft() { return this->left; }
-	TreeNode* getRight() { return this->right; }
-};
-*/
 
 class TreeNode {
 public:
@@ -116,6 +103,7 @@ int diameterbinarytreeold(TreeNode *root) {
 	int ld = diameterbinarytreeold(root->left);
 	return max(lh + rh + 1, max(rd, ld));
 }
+
 int diameterbinarytreerec(TreeNode *root, int *height) {
 	if (root == nullptr) {
 		*height = 0;
@@ -1047,7 +1035,42 @@ void reverse(char *str) {
 
 }
 
+LinkedListNode * LinkedListDetectCircularLoop(LinkedListNode *start) {
 
+	if (start == nullptr)
+		return nullptr;
+
+	LinkedListNode *slowptr = start;
+	LinkedListNode *fastptr = start;
+
+	while (fastptr && fastptr->next) {
+		slowptr = slowptr->next;
+		fastptr = fastptr->next->next;
+	
+		if (fastptr == slowptr)	// fastptr has overtaken slowptr
+		{
+			cout << "Loop detected!" << endl;
+			break;
+		}
+	}
+
+	// no loop detected		
+	if (fastptr || fastptr->next) {
+		cout << "Loop not detected!" << endl;
+		return nullptr;
+	}
+
+	// move back slowptr to the head of the list
+	slowptr = start;
+
+	while (slowptr != fastptr) {
+		slowptr = slowptr->next;
+		fastptr = fastptr->next;
+	}
+
+	return fastptr;
+
+}
 
 int main()
 {
@@ -1148,6 +1171,18 @@ Inorder visit order:
 	char str[] = "ABD";
 	reverse(str);
 	cout << "Reversed word: " << str << endl;
+*/
+
+	// Test Code for DetectCircularLoop
+	LinkedListNode *head = new LinkedListNode(1);
+	LinkedListNode *curr = head;
+
+	curr->next = new LinkedListNode(2);
+	curr->next->next = new LinkedListNode(3);
+	curr->next->next->next = new LinkedListNode(4);
+	curr->next->next->next->next = curr->next; // loop from 4 to 2
+
+	LinkedListNode *startofloop = LinkedListDetectCircularLoop(curr);
 
     return 0;
 */
