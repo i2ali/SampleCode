@@ -136,6 +136,33 @@ int diameterbinarytree(TreeNode *root) {
 }
 
 
+// print all pairs of integers in a array that sum to a particular value
+void findpairs(int arr[], int arraysize, int sum) {
+
+	std::unordered_map<int,int> hashtable;
+
+	int tofind = 0;
+	std::unordered_map<int, int>::const_iterator got;
+
+	for (int i = 0; i < arraysize; i++) {
+		
+		tofind = sum - arr[i];
+		got = hashtable.find(tofind);
+
+		if (got != hashtable.end())
+			cout << "Pair found: " << arr[i] << ", " << tofind << endl;
+
+		hashtable.emplace(arr[i],i);
+	}
+
+	// print out the hashtable
+
+	for (auto i = hashtable.begin(); i != hashtable.end(); i++) {
+		cout << i->first << ": " << i->second << endl;	
+	}
+
+}
+
 /*
 Design a data structure that supports insert, delete, search and getRandom in constant time
 Design a data structure that supports following operations in ?(1) time.
@@ -232,6 +259,52 @@ public:
 	}
 };
 
+class BiNode {
+public:
+	BiNode() { node1 = nullptr; node2 = nullptr; }
+	BiNode(int val) { node1 = nullptr; node2 = nullptr; data = val; }
+	BiNode *node1;
+	BiNode *node2;
+	int data;
+};
+
+class NodePair {
+public:
+	BiNode *head;
+	BiNode *tail;
+
+	NodePair(BiNode *head, BiNode *tail) {
+		head = head;
+		tail = tail;
+	}
+};
+
+
+void concat(BiNode *x, BiNode *y) {
+	x->node2 = y;
+	y->node1 = x;
+}
+
+// convert a binary search tree to a doublylinked list
+// Algorithm: use an in-order traversal
+NodePair* ConvertBSTtoLinkedList(BiNode *root){
+
+	if (root == nullptr)
+		return nullptr;
+
+	NodePair *part1 = ConvertBSTtoLinkedList(root->node1);
+	NodePair *part2 = ConvertBSTtoLinkedList(root->node2);
+	
+	if (part1) {
+		concat(part1->tail, root);	
+	}
+
+	if (part2) {
+		concat(root, part2->head);
+	}
+
+	return new NodePair(part1 ? part1->head : root, part2 ? part2->tail : root);
+}
 
 // reverse a singly linked list
 void reverselist(LinkedListNode *head) {
@@ -1070,12 +1143,18 @@ Inorder visit order:
 	FindMthNodeinBST(root, 9, &curr);
 */
 
-	// Test code for reversestring()
+/* Test code for reversestring()
 
 	char str[] = "ABD";
 	reverse(str);
 	cout << "Reversed word: " << str << endl;
 
     return 0;
+*/
+
+// test code for finding all pairs of integers that sum to a particular value
+
+	int test[] = { 7,1,2,8 };
+	findpairs(test, sizeof(test)/sizeof(int), 9);
 }
 
