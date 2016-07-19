@@ -90,6 +90,7 @@
     <ClCompile Include="CountInversions.cpp" />
     <ClCompile Include="DetermineifSumExistsinPath.cpp" />
     <ClCompile Include="DistanceFromNearestLeaf.cpp" />
+    <ClCompile Include="FindLowestCommonAncestor.cpp" />
     <ClCompile Include="FindNumberIslands.cpp" />
     <ClCompile Include="InorderIteratorBinaryTree.cpp" />
     <ClCompile Include="main.cpp" />
