@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <vector>
 
 class TreeNode {
 public:
@@ -63,3 +64,5 @@ TreeNode * findMaxValue(TreeNode *root);
 TreeNode *findNextSuccessor(TreeNode *root, TreeNode *start);
 TreeNode *findNextPredecessor(TreeNode *root, TreeNode *start);
 TreeNode *findValue(TreeNode *root, int val);
+bool findPath(TreeNode *root, std::vector<int> &path, int target);
+int findLowestCommonAncestor(TreeNode *root, int n1, int n2);

@@ -66,7 +66,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
 
-	TreeNode *minnode = findMinValue(root);
+/*	TreeNode *minnode = findMinValue(root);
 	if (minnode) cout << "Min Value: " << minnode->_data << endl;
 
 	TreeNode *maxnode = findMaxValue(root);
@@ -89,6 +89,21 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << "Found value of: " << bstresult->_data << endl;
 	else
 		cout << "Not found!" << endl;
+*/
+	vector<int>path;
+	vector<int>path1;
+
+	findPath(root,path,17);
+
+	for (auto i = path.begin(); i != path.end(); i++)
+		cout << "Val: " << (*i) << endl;
+
+	findPath(root, path1, 20);
+
+	for (auto i = path1.begin(); i != path1.end(); i++)
+		cout << "Val: " << (*i) << endl;
+
+	cout << findLowestCommonAncestor(root, 17, 20) << endl;
 
 	return 0;
 }
