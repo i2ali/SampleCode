@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{199ED537-9489-44A4-BB7E-73C938E25C9E}"
 EndProject
@@ -23,6 +23,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CareerCupQuestions_C++", "CareerCupQuestions_C++\CareerCupQuestions_C++.vcxproj", "{60DA0A14-6337-4080-9B66-D42642C804F4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlainCode", "PlainCode\PlainCode.vcxproj", "{0624B0ED-149F-4BF5-966B-FB6E58BBE4B0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinProg", "WinProg\WinProg.vcxproj", "{02133986-E188-45B6-A7F7-2D1E62399D5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -174,6 +176,20 @@ Global
 		{0624B0ED-149F-4BF5-966B-FB6E58BBE4B0}.Release|Win32.Build.0 = Release|Win32
 		{0624B0ED-149F-4BF5-966B-FB6E58BBE4B0}.Release|x64.ActiveCfg = Release|x64
 		{0624B0ED-149F-4BF5-966B-FB6E58BBE4B0}.Release|x64.Build.0 = Release|x64
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|Win32.Build.0 = Debug|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|x64.ActiveCfg = Debug|x64
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Debug|x64.Build.0 = Debug|x64
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|Win32.ActiveCfg = Release|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|Win32.Build.0 = Release|Win32
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|x64.ActiveCfg = Release|x64
+		{02133986-E188-45B6-A7F7-2D1E62399D5E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
