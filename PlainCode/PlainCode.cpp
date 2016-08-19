@@ -1072,6 +1072,19 @@ LinkedListNode * LinkedListDetectCircularLoop(LinkedListNode *start) {
 
 }
 
+// 2 sum question
+// given a sorted array, find 2 numbers that sum up to S.
+
+// 3 sum question
+// Determine if 3 integers in an array sum to 0.
+
+// lowest common ancestor in a tree
+
+// Implement data structure “Map” storing pairs of integers (key, value) and define 
+// following member functions in O(1) runtime: void insert(key, value), void delete(key), 
+// int get(key), int getRandomKey().
+
+
 int main()
 {
 // Test Code for RemoveDuplicates
