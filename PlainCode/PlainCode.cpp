@@ -1074,6 +1074,34 @@ LinkedListNode * LinkedListDetectCircularLoop(LinkedListNode *start) {
 
 // 2 sum question
 // given a sorted array, find 2 numbers that sum up to S.
+void twosum(int arr[], int size, int target) {
+
+	if (size < 2) {
+		cout << "Indeterminate size" << endl;
+		return;
+	}
+		
+	int endindex = size - 1;
+	int tempsum = 0;
+
+	for (int i = 0; i < endindex; i++) {	
+
+		for (int j = i + 1; j < endindex; j++) {
+			tempsum = arr[i] + arr[j];
+			if (tempsum == target) {
+				cout << "Found match: " << arr[i] << " " << arr[j] << endl;
+				return;
+			}
+			if (tempsum > target)
+				endindex = j;
+		}	
+	}
+	cout << "no matches found!" << endl;
+	return;	
+}
+
+// 2 sum question
+// given a unsorted array, find 2 numbers that sum up to S.
 
 // 3 sum question
 // Determine if 3 integers in an array sum to 0.
@@ -1205,5 +1233,8 @@ Inorder visit order:
 	findpairs(test, sizeof(test)/sizeof(int), 9);
 
 */
+
+	int test[] = { 3, 5, 7, 10, 11};
+	twosum(test, sizeof(test), 13);
 }
 
