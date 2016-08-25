@@ -1074,37 +1074,102 @@ LinkedListNode * LinkedListDetectCircularLoop(LinkedListNode *start) {
 
 // 2 sum question
 // given a sorted array, find 2 numbers that sum up to S.
-void twosum(int arr[], int size, int target) {
+void twosumsorted(int arr[], int size, int target) {
 
 	if (size < 2) {
 		cout << "Indeterminate size" << endl;
 		return;
 	}
-		
+
+	int beginindex = 0;
 	int endindex = size - 1;
 	int tempsum = 0;
 
-	for (int i = 0; i < endindex; i++) {	
+	while (beginindex < endindex) {
+		tempsum = arr[beginindex] + arr[endindex];
 
-		for (int j = i + 1; j < endindex; j++) {
-			tempsum = arr[i] + arr[j];
-			if (tempsum == target) {
-				cout << "Found match: " << arr[i] << " " << arr[j] << endl;
-				return;
-			}
-			if (tempsum > target)
-				endindex = j;
-		}	
+		if (tempsum == target) {
+			cout << "Found match: " << arr[beginindex] << " " << arr[endindex] << endl;
+			return;
+		}
+		else if (tempsum < target)
+			beginindex++;
+		else
+			endindex--;
 	}
+
 	cout << "no matches found!" << endl;
 	return;	
 }
 
 // 2 sum question
 // given a unsorted array, find 2 numbers that sum up to S.
+void twosum(int arr[], int size, int target) {
+
+	if (size < 2) {
+		cout << "Indeterminate size" << endl;
+		return;
+	}
+
+	int find = 0;
+	unordered_map<int,int>map;
+	std::unordered_map<int, int>::const_iterator got;
+
+	for (int i = 0; i < size; i++) {
+		find = target - arr[i];
+		got = map.find(find);
+
+		if (got == map.end()) {  // not found
+			map.emplace(arr[i], arr[i]);
+		}
+		else {
+			cout << "Found match: " << arr[i] << "," << got->first << endl;
+			return;
+		}
+	}
+
+	cout << "no matches found!" << endl;
+	return;
+}
 
 // 3 sum question
-// Determine if 3 integers in an array sum to 0.
+// Determine if 3 integers in an array sum to a number.
+void threesum(int arr[], int size, int target) {
+	
+	if (size < 2) {
+		cout << "Indeterminate size" << endl;
+		return;
+	}
+
+	// O(nlogn) sort
+	std::sort(arr,arr + size);
+
+	// rest is O(n), based on 2sum with sorted implementation
+	for (int i = 0; i < size - 2; i++) {
+
+		int beginindex = i + 1;
+		int endindex = size - 1;
+		int tempsum = 0;
+
+		while (beginindex < endindex) {
+			tempsum = arr[i] + arr[beginindex] + arr[endindex];
+
+			if (tempsum == target) {
+				cout << "Found match: " << arr[i] << " " << arr[beginindex] << " " << arr[endindex] << endl;
+				return;
+			}
+			else if (tempsum < target)
+				beginindex++;
+			else
+				endindex--;
+		}
+	} //for
+
+	cout << "no matches found!" << endl;
+	return;
+
+}
+
 
 // lowest common ancestor in a tree
 
@@ -1234,7 +1299,9 @@ Inorder visit order:
 
 */
 
-	int test[] = { 3, 5, 7, 10, 11};
-	twosum(test, sizeof(test), 13);
-}
+	int test[] = { -1, -1, 0, 4, 100, 14};
+//	twosumsorted(test, sizeof(test)/sizeof(int), 10);
+
+	threesum(test, sizeof(test) / sizeof(int), 2);
+};
 
