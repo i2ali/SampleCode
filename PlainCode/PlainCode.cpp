@@ -1170,6 +1170,25 @@ void threesum(int arr[], int size, int target) {
 
 }
 
+// DP practice
+// Given n, find the number of different ways to write n as a sum of 1,3,4
+int FindNumSum(int n) {
+
+	int *D = new int[n + 1];
+	D[0] = D[1] = D[2] = 1;
+	D[3] = 2;
+
+	for (int i = 4; i <= n; i++ ) 
+		D[i] = D[i - 1] + D[i - 3] + D[i - 4];
+	
+	int i = D[n];
+	delete[] D;
+
+	return i;
+
+}
+
+
 
 // lowest common ancestor in a tree
 
@@ -1299,9 +1318,13 @@ Inorder visit order:
 
 */
 
-	int test[] = { -1, -1, 0, 4, 100, 14};
-//	twosumsorted(test, sizeof(test)/sizeof(int), 10);
+/*	int test[] = { -1, -1, 0, 4, 100, 14};
+	twosumsorted(test, sizeof(test)/sizeof(int), 10);
 
 	threesum(test, sizeof(test) / sizeof(int), 2);
+*/
+
+	cout << FindNumSum(10) << endl;
+
 };
 
