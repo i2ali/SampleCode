@@ -1099,7 +1099,7 @@ void twosumsorted(int arr[], int size, int target) {
 	}
 
 	cout << "no matches found!" << endl;
-	return;	
+	return;
 }
 
 // 2 sum question
@@ -1112,7 +1112,7 @@ void twosum(int arr[], int size, int target) {
 	}
 
 	int find = 0;
-	unordered_map<int,int>map;
+	unordered_map<int, int>map;
 	std::unordered_map<int, int>::const_iterator got;
 
 	for (int i = 0; i < size; i++) {
@@ -1135,14 +1135,14 @@ void twosum(int arr[], int size, int target) {
 // 3 sum question
 // Determine if 3 integers in an array sum to a number.
 void threesum(int arr[], int size, int target) {
-	
+
 	if (size < 2) {
 		cout << "Indeterminate size" << endl;
 		return;
 	}
 
 	// O(nlogn) sort
-	std::sort(arr,arr + size);
+	std::sort(arr, arr + size);
 
 	// rest is O(n), based on 2sum with sorted implementation
 	for (int i = 0; i < size - 2; i++) {
@@ -1178,9 +1178,9 @@ int FindNumSum(int n) {
 	D[0] = D[1] = D[2] = 1;
 	D[3] = 2;
 
-	for (int i = 4; i <= n; i++ ) 
+	for (int i = 4; i <= n; i++)
 		D[i] = D[i - 1] + D[i - 3] + D[i - 4];
-	
+
 	int i = D[n];
 	delete[] D;
 
@@ -1188,7 +1188,31 @@ int FindNumSum(int n) {
 
 }
 
+// Given a BST and 2 values (min, max) trim the tree such that all values are between min/max and still a valid BST.  
+// post order traversal will result in visiting the children first and then fix the subtrees as we recurse back
+TreeNode * TrimBST(TreeNode *root, int min, int max) {
+	if (root == nullptr)
+		return nullptr;
+	
+	root->left = TrimBST(root->left, min, max);
+	root->right = TrimBST(root->right, min, max);
 
+	if (root->_data < min) {
+		TreeNode *temp = root->right;
+		delete root;
+		return temp;
+	}
+
+    if (root->_data > max) {
+		TreeNode *temp = root->left;
+		delete root;
+		return temp;
+	}
+
+	// in range
+	return root;
+
+}
 
 // lowest common ancestor in a tree
 
@@ -1269,7 +1293,7 @@ Inorder visit order:
 		Visit Node: 21
 		Visit Node: 22
 		Visit Node: 23
-
+*/
 	TreeNode *root = new TreeNode(15);
 	root->left = new TreeNode(8);
 	root->left->right = new TreeNode(9);
@@ -1284,12 +1308,15 @@ Inorder visit order:
 	root->right->right = new TreeNode(22);
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
-
+/*
 	int curr = 0;
 	FindMthNodeinBST(root, 2, &curr);
 	curr = 0;
 	FindMthNodeinBST(root, 9, &curr);
 */
+	TreeNode *tree = TrimBST(root, 8, 17);
+	Traversals(tree, Inorder);
+	delete tree;
 
 /* Test code for reversestring()
 
@@ -1324,7 +1351,7 @@ Inorder visit order:
 	threesum(test, sizeof(test) / sizeof(int), 2);
 */
 
-	cout << FindNumSum(10) << endl;
+//	cout << FindNumSum(10) << endl;
 
 };
 
