@@ -1188,31 +1188,40 @@ int FindNumSum(int n) {
 
 }
 
-// Given a BST and 2 values (min, max) trim the tree such that all values are between min/max and still a valid BST.  
-// post order traversal will result in visiting the children first and then fix the subtrees as we recurse back
-TreeNode * TrimBST(TreeNode *root, int min, int max) {
+// Given a BST and 2 values(min, max) trim the tree such that all values are between min / max and still a valid BST
+// Post-order traversal allows you to fix the subtrees, then visit the root
+TreeNode *TrimBST(TreeNode *root, int min, int max) {
+
 	if (root == nullptr)
 		return nullptr;
-	
+
 	root->left = TrimBST(root->left, min, max);
 	root->right = TrimBST(root->right, min, max);
 
-	if (root->_data < min) {
-		TreeNode *temp = root->right;
+	// if less than min, we care about what is on the right subtree
+	if ((root->_data < min) || (root->_data > max)) {
+
+		TreeNode *temp = nullptr;
+
+		if (root->_data < min) {
+			temp = root->right;
+		}
+		else if (root->_data > max) {
+			temp = root->left;
+		}
+
 		delete root;
 		return temp;
-	}
 
-    if (root->_data > max) {
-		TreeNode *temp = root->left;
-		delete root;
-		return temp;
 	}
-
-	// in range
+	// node is within acceptable range, just return node as is.
 	return root;
-
 }
+
+
+// Implement FizzBuzz test:
+// Write a program that prints the numbers from 1 to 100. But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz".For numbers which are multiples of both three and five print "FizzBuzz".
+
 
 // lowest common ancestor in a tree
 
