@@ -1221,6 +1221,21 @@ TreeNode *TrimBST(TreeNode *root, int min, int max) {
 
 // Implement FizzBuzz test:
 // Write a program that prints the numbers from 1 to 100. But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz".For numbers which are multiples of both three and five print "FizzBuzz".
+void FizzBuzzTest() {
+	for (int i = 1; i <= 100; i++) {
+		
+		if ((i % 3) == 0) 
+			cout << "Fizz";		
+		if ((i % 5) == 0)
+			cout << "Buzz";
+
+		if (((i % 5) != 0) && ((i % 3) != 0))
+			cout << i;
+
+		cout << endl;
+
+	} // for
+}
 
 
 // lowest common ancestor in a tree
@@ -1322,11 +1337,11 @@ Inorder visit order:
 	FindMthNodeinBST(root, 2, &curr);
 	curr = 0;
 	FindMthNodeinBST(root, 9, &curr);
-*/
+
 	TreeNode *tree = TrimBST(root, 8, 17);
 	Traversals(tree, Inorder);
 	delete tree;
-
+*/
 /* Test code for reversestring()
 
 	char str[] = "ABD";
@@ -1361,6 +1376,8 @@ Inorder visit order:
 */
 
 //	cout << FindNumSum(10) << endl;
+
+	FizzBuzzTest();
 
 };
 
