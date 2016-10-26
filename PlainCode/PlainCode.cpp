@@ -1237,6 +1237,30 @@ void FizzBuzzTest() {
 	} // for
 }
 
+/*
+Check if we have a valid BST, traverse the BST in order as they will all be in ascending order as per the properties of a BST.
+*/
+bool isBSTInOrderHelper(TreeNode *p, int& prev) {
+	if (!p) return true;
+	if (isBSTInOrderHelper(p->left, prev)) {
+		if (p->_data > prev) {
+			prev = p->_data;
+			return isBSTInOrderHelper(p->right, prev);
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+bool isBSTInOrder(TreeNode *root) {
+	int prev = INT_MIN;
+	return isBSTInOrderHelper(root, prev);
+}
+
 
 // lowest common ancestor in a tree
 
@@ -1318,7 +1342,7 @@ Inorder visit order:
 		Visit Node: 22
 		Visit Node: 23
 */
-	TreeNode *root = new TreeNode(15);
+/*	TreeNode *root = new TreeNode(15);
 	root->left = new TreeNode(8);
 	root->left->right = new TreeNode(9);
 	root->left->right->right = new TreeNode(10);
@@ -1332,6 +1356,7 @@ Inorder visit order:
 	root->right->right = new TreeNode(22);
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
+*/
 /*
 	int curr = 0;
 	FindMthNodeinBST(root, 2, &curr);
@@ -1376,8 +1401,25 @@ Inorder visit order:
 */
 
 //	cout << FindNumSum(10) << endl;
+//	FizzBuzzTest();
 
-	FizzBuzzTest();
 
+//              18
+//          15      22
+//        13  14   21 23
+// create BST tree
+	TreeNode *root = new TreeNode(18);
+	root->left = new TreeNode(15);
+	root->left->right = new TreeNode(16);
+	root->left->left = new TreeNode(13);
+
+	root->right = new TreeNode(22);
+	root->right->left = new TreeNode(21);
+	root->right->right = new TreeNode(23);
+
+	if (isBSTInOrder(root))
+		cout << "Valid BST" << endl;
+	else
+		cout << "Not Valid BST" << endl;
 };
 
