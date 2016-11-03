@@ -458,6 +458,41 @@ public:
 
 };
 
+
+// determine if one string is an anagram of another
+
+bool isanagram(const string &s1, const string &s2) {
+
+	if (s1.size() != s2.size()) return false;
+
+	int size = s1.size();
+	
+	// put everything first into a hashtable
+	std::unordered_map<char, int> table;
+	std::unordered_map<char, int>::const_iterator got;
+
+	for (int i = 0; i < size; i++) {
+		got = table.find(s1[i]);
+		if (got == table.end()) // entry not found
+			table.insert({ s1[i], 1 });
+		else {// entry found {
+			table[s1[i]]++; 
+	    }
+	}
+
+	for (int i = 0; i < size; i++) {
+		got = table.find(s2[i]);
+		if ((got == table.end()) || (table[s2[i]] == 0))
+			return false; 
+		else {
+			table[s2[i]]--;
+		}
+	}
+	return true;
+}
+
+
+
 // find the first non-repeated character in a string
 
 char findfirstnonrepeatedchar(const string &s) {
@@ -1317,7 +1352,7 @@ Inorder visit order:
 		Visit Node: 21
 		Visit Node: 22
 		Visit Node: 23
-*/
+
 	TreeNode *root = new TreeNode(15);
 	root->left = new TreeNode(8);
 	root->left->right = new TreeNode(9);
@@ -1332,6 +1367,7 @@ Inorder visit order:
 	root->right->right = new TreeNode(22);
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
+*/
 /*
 	int curr = 0;
 	FindMthNodeinBST(root, 2, &curr);
@@ -1377,7 +1413,12 @@ Inorder visit order:
 
 //	cout << FindNumSum(10) << endl;
 
-	FizzBuzzTest();
+//	FizzBuzzTest();
+
+// test code for isanagram
+	bool flag =	isanagram("adbbcf", "abbfcd");
+	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
+
 
 };
 
