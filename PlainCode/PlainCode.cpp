@@ -1272,6 +1272,30 @@ void FizzBuzzTest() {
 	} // for
 }
 
+/*
+Check if we have a valid BST, traverse the BST in order as they will all be in ascending order as per the properties of a BST.
+*/
+bool isBSTInOrderHelper(TreeNode *p, int& prev) {
+	if (!p) return true;
+	if (isBSTInOrderHelper(p->left, prev)) {
+		if (p->_data > prev) {
+			prev = p->_data;
+			return isBSTInOrderHelper(p->right, prev);
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+bool isBSTInOrder(TreeNode *root) {
+	int prev = INT_MIN;
+	return isBSTInOrderHelper(root, prev);
+}
+
 
 // lowest common ancestor in a tree
 
@@ -1412,6 +1436,7 @@ Inorder visit order:
 */
 
 //	cout << FindNumSum(10) << endl;
+//	FizzBuzzTest();
 
 //	FizzBuzzTest();
 
@@ -1420,5 +1445,9 @@ Inorder visit order:
 	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
 
 
+	if (isBSTInOrder(root))
+		cout << "Valid BST" << endl;
+	else
+		cout << "Not Valid BST" << endl;
 };
 
