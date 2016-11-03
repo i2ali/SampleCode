@@ -1438,8 +1438,7 @@ Inorder visit order:
 //	cout << FindNumSum(10) << endl;
 //	FizzBuzzTest();
 
-//	FizzBuzzTest();
-
+/*
 // test code for isanagram
 	bool flag =	isanagram("adbbcf", "abbfcd");
 	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
@@ -1449,5 +1448,6 @@ Inorder visit order:
 		cout << "Valid BST" << endl;
 	else
 		cout << "Not Valid BST" << endl;
+		*/
 };
 
