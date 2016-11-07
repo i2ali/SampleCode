@@ -612,18 +612,13 @@ void LevelOrderTraversal(TreeNode *root) {
 	myqueue.push(root);
 
 	while (!myqueue.empty()) {
-
-		int size = myqueue.size(); // only process TreeNodes from last run
-
-		for (int i = 0; i<size; i++) {
-			TreeNode *node = myqueue.front();
-			visit(node);
-			if (node->left != nullptr)
-				myqueue.push(node->left);
-			if (node->right != nullptr)
-				myqueue.push(node->right);
-			myqueue.pop();
-		} // for
+		TreeNode *node = myqueue.front();
+		visit(node);
+		myqueue.pop();
+		if (node->left != nullptr)
+			myqueue.push(node->left);
+		if (node->right != nullptr)
+			myqueue.push(node->right);
 	}
 
 }
