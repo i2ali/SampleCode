@@ -662,7 +662,8 @@ int squarenum(int num) {
 //for n>=3, getMinSquares(n) = min{1+(n-x*x)} for x>=1 and x*x <=n
 
 // Returns count of minimum squares that sum to n
-int getMinSquares(int n)
+// exponential run-time
+int getMinSquares1(int n)
 {
 	// base cases
 	if (n <= 3)
@@ -680,10 +681,46 @@ int getMinSquares(int n)
 		if (temp > n)
 			break;
 		else
-			res = min(res, 1 + getMinSquares(n - temp));
+			res = min(res, 1 + getMinSquares1(n - temp));
 	}
 	return res;
 }
+
+// DP version of min squares
+int getMinSquares(int n)
+{
+	int *dp = new int[n + 1];
+
+	// getMinSquares table for base case entries
+	dp[0] = 0;
+	dp[1] = 1;
+	dp[2] = 2;
+	dp[3] = 3;
+
+	// fill in values up till n
+	for (int i = 4; i <= n; i++)
+	{
+		// max value is i as i can always be represented
+		// as 1*1 + 1*1 + ...
+		dp[i] = i;
+
+		for (int x = 1; x <= i; x++) {
+			int temp = x*x;
+			if (temp > i)
+				break;
+			else dp[i] = min(dp[i], 1 + dp[i - temp]);
+		}
+	}
+
+	int res = dp[n];
+	delete[] dp;
+
+	return res;
+}
+
+// Count the number of prime numbers less than a non - negative number, n.
+// To determine if a number is prime, check if it is not divisible by any number less than n. 
+// The runtime complexity of isPrime function would be O(n) and hence counting the total prime numbers up to n would be O(n2). 
 
 
 /*
