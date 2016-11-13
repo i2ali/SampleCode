@@ -1307,20 +1307,14 @@ void FizzBuzzTest() {
 /*
 Check if we have a valid BST, traverse the BST in order as they will all be in ascending order as per the properties of a BST.
 */
+
 bool isBSTInOrderHelper(TreeNode *p, int& prev) {
 	if (!p) return true;
-	if (isBSTInOrderHelper(p->left, prev)) {
-		if (p->_data > prev) {
-			prev = p->_data;
-			return isBSTInOrderHelper(p->right, prev);
-		}
-		else {
-			return false;
-		}
-	}
-	else {
+
+	if ((isBSTInOrderHelper(p->left, prev)) && (p->_data > prev)) 
+		return isBSTInOrderHelper(p->right, p->_data);
+	else 
 		return false;
-	}
 }
 
 bool isBSTInOrder(TreeNode *root) {
@@ -1408,7 +1402,7 @@ Inorder visit order:
 		Visit Node: 21
 		Visit Node: 22
 		Visit Node: 23
-
+*/
 	TreeNode *root = new TreeNode(15);
 	root->left = new TreeNode(8);
 	root->left->right = new TreeNode(9);
@@ -1423,7 +1417,7 @@ Inorder visit order:
 	root->right->right = new TreeNode(22);
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
-*/
+
 /*
 	int curr = 0;
 	FindMthNodeinBST(root, 2, &curr);
@@ -1475,11 +1469,11 @@ Inorder visit order:
 	bool flag =	isanagram("adbbcf", "abbfcd");
 	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
 
-
+*/
 	if (isBSTInOrder(root))
 		cout << "Valid BST" << endl;
 	else
 		cout << "Not Valid BST" << endl;
-		*/
+		
 };
 
