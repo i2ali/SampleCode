@@ -1323,6 +1323,33 @@ bool isBSTInOrder(TreeNode *root) {
 }
 
 
+int remDupes(int *a, int size) {
+	if (size <= 2) {
+		return size;
+	}
+	int curr = 1;
+	int prev = 0;
+	int flag = false;
+
+	while (curr < size) {
+		
+		if (a[curr] == a[prev])
+			flag = true;
+		else if ((a[curr] != a[prev]) && (flag)) {
+			a[prev + 1] = a[curr];
+			prev++;
+			flag = false;
+		}
+		else {
+			prev++;
+		}
+
+		curr++;			
+	}
+
+	return prev + 1;
+}
+
 // lowest common ancestor in a tree
 
 // Implement data structure “Map” storing pairs of integers (key, value) and define 
@@ -1469,11 +1496,21 @@ Inorder visit order:
 	bool flag =	isanagram("adbbcf", "abbfcd");
 	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
 
-*/
+
 	if (isBSTInOrder(root))
 		cout << "Valid BST" << endl;
 	else
 		cout << "Not Valid BST" << endl;
-		
+*/
+	int a[6] = { 1,2,2,4,4,19};
+
+	int arrsize = remDupes(a, sizeof(a)/sizeof(int));
+
+	for (int i = 0; i < arrsize; i++) {
+		cout << i << ": " << a[i] << " " << endl;
+	}
+	cout << endl;
+	cout << "Array Size: " << arrsize << endl;
+
 };
 
