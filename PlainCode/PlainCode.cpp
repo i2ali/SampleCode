@@ -486,9 +486,13 @@ bool isanagram(const string &s1, const string &s2) {
 			return false; 
 		else {
 			table[s2[i]]--;
+			if (table[s2[i]] == 0)
+				table.erase(s2[i]);
 		}
 	}
-	return true;
+
+	// table must be empty now
+	return (table.size() == 0);
 }
 
 
@@ -1491,17 +1495,17 @@ Inorder visit order:
 //	cout << FindNumSum(10) << endl;
 //	FizzBuzzTest();
 
-/*
+
 // test code for isanagram
-	bool flag =	isanagram("adbbcf", "abbfcd");
+	bool flag =	isanagram("abcdefs", "fedcbaz");
 	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
 
-
+/*
 	if (isBSTInOrder(root))
 		cout << "Valid BST" << endl;
 	else
 		cout << "Not Valid BST" << endl;
-*/
+
 	int a[6] = { 1,2,2,4,4,19};
 
 	int arrsize = remDupes(a, sizeof(a)/sizeof(int));
@@ -1511,6 +1515,6 @@ Inorder visit order:
 	}
 	cout << endl;
 	cout << "Array Size: " << arrsize << endl;
-
+*/
 };
 
