@@ -1357,6 +1357,44 @@ int remDupes(int *a, int size) {
 // int get(key), int getRandomKey().
 
 
+// given a list of file paths, determine the most common directory path and return it
+// assume every string passed in has a root dir '\' (may not be a valid assertion though)
+string commonFilePath(const vector<string> &paths) {
+	if (paths.size() == 0)
+		return string("");
+	if (paths.size() == 1)
+		return paths[0];
+
+	int lastcommonpath = 0;
+	int pathsize = paths.size();
+	bool mismatch = false;
+	char begin;
+	int index = 0;
+
+	while (!mismatch) {
+		begin = paths[0][index];
+		
+		for (int i = 1; i < pathsize; i++) {
+			if ((paths[i].size() <= index) || paths[i][index] != begin) {
+				mismatch = true;
+				break;
+			}
+		}
+
+		if ((begin == '/') && (!mismatch)) {
+			lastcommonpath = index;
+		}
+	
+		index++;
+	
+	}
+	if (lastcommonpath == 0)
+		return "/";
+	else
+		return paths[0].substr(0, lastcommonpath);
+}
+
+
 int main()
 {
 // Test Code for RemoveDuplicates
@@ -1502,7 +1540,7 @@ Inorder visit order:
 	else
 		cout << "Not Valid BST" << endl;
 */
-	int a[6] = { 1,2,2,4,4,19};
+/*	int a[6] = { 1,2,2,4,4,19};
 
 	int arrsize = remDupes(a, sizeof(a)/sizeof(int));
 
@@ -1511,6 +1549,10 @@ Inorder visit order:
 	}
 	cout << endl;
 	cout << "Array Size: " << arrsize << endl;
+*/
+	vector<string>paths = { "/test/a/a","/test/bc/a","/test/a/",""};
+	cout << commonFilePath(paths) << endl;
+
 
 };
 
