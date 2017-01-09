@@ -601,10 +601,35 @@ void Traversals(TreeNode *root, Order order) {
 
 }
 
+/*
+You are given an array of positive and negative integers. 
+If a number n at an index is positive, then move forward n steps. 
+Conversely, if it's negative (-n), move backward n steps. 
+Assume the first element of the array is forward next to the last element, 
+and the last element is backward next to the first element. 
+Determine if there is a loop in this array. A loop starts and ends at a particular index with more than 1 element along the loop. The loop must be "forward" or "backward'.
+*/
+bool circularArrayLoop(vector<int>& nums) {
+		if (nums.empty()) return false;
+		int index = 0;
+		int size = nums.size();
+		int i = 0;
+		int val = 0;
+		bool direction = true;
+		if (nums[0] < 0) direction = false;
+
+		while (i <= size) {
+			val = nums[index];
+			if ((val > 0 && !direction) || (val < 0 && direction)) return false;
+			index = (index + val) % size;
+			i++;
+			if (index == 0) return true;
+		}
+		return false;
+	}
 
 // do level order traversal which is a BFS
 // for each TreeNode in queue, visit the TreeNode and enqueue their left and right TreeNodes
-
 
 void LevelOrderTraversal(TreeNode *root) {
 
