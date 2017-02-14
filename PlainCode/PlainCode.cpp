@@ -69,28 +69,25 @@ bool heightbalancedold(TreeNode *root) {
 	return false;
 }
 
-
-bool heightbalancedrec(TreeNode *root, int *height) {
+bool heightbalancedrec(TreeNode *root, int &height) {
 	if (root == nullptr) {
-		*height = 0;
+		height = 0;
 		return true;
 	}
 	int lh = 0;
 	int rh = 0;
 	bool l = false;
 	bool r = false;
-	l = heightbalancedrec(root->left, &lh);
-	r = heightbalancedrec(root->right, &rh);
-	*height = max(lh, rh) + 1;
-	if (abs(lh - rh) >= 2)
-		return false;
-	return (l && r);
+	l = heightbalancedrec(root->left, lh);
+	r = heightbalancedrec(root->right, rh);
+	height = max(lh, rh) + 1;
+	return (l && r && (abs(lh - rh) <= 1));
 }
 
 // determine if tree is height-balanced, O(n)
 bool heightbalanced(TreeNode *root) {
 	int height = 0;
-	return heightbalancedrec(root, &height);
+	return heightbalancedrec(root, height);
 }
 
 // diameter of binary tree O(n^2)
@@ -1314,6 +1311,110 @@ TreeNode *TrimBST(TreeNode *root, int min, int max) {
 	return root;
 }
 
+TreeNode *searchNode(int key, TreeNode *root,TreeNode **parent) {
+
+	if (root == nullptr) return nullptr;
+
+	TreeNode *curr = root;
+	*parent = root;
+
+	while (curr) {
+		if (curr->_data == key) {
+				return curr;
+		}
+		else if (curr->_data > key) {
+			*parent = curr;
+			curr = curr->left;
+		}
+		else {
+			*parent = curr;
+			curr = curr->right;
+		}
+	}
+	// node not found
+	*parent = nullptr;
+	return nullptr; 
+}
+
+void swapValues(TreeNode *first, TreeNode *second) {
+	if (!first || !second) return;
+
+	int temp = first->_data;
+	first->_data = second->_data;
+	second->_data = temp;
+}
+
+
+// better approach, replace value with min value instead 
+void swapNodes(TreeNode *root) {
+	if (root == nullptr) return;
+	TreeNode *curr = root;
+	TreeNode *parent = root;	
+	// true = right, false = left;
+	bool parentfix = true;
+
+	while (curr) {
+
+		if (curr->right) {
+			swapValues(curr, curr->right);
+		}
+		else if (curr->left) {
+			swapValues(curr, curr->left);
+			}
+		else {
+			if (parentfix)
+				parent->right = nullptr; 
+			else 
+				parent->left = nullptr;
+			curr = nullptr;
+			delete curr;
+			break;
+		}
+
+		parent = curr;
+		if (curr->right) {
+			curr = curr->right;
+			parentfix = true;
+		}
+		else {
+			curr = curr->left;
+			parentfix = false;
+		}
+	}
+}
+
+TreeNode* deleteNode(TreeNode* root, int key) {
+	if (root == nullptr)
+		return nullptr;
+	// check if single node
+	if (!(root->right) && !(root->left) && (root->_data == key)) {
+		delete root;
+		return nullptr;
+	}
+
+	TreeNode *parent = nullptr;
+	TreeNode *sNode = searchNode(key, root, &parent);
+	if (sNode == nullptr) return root;
+
+	// if child node, just delete it 
+	if ((sNode->right == nullptr) && (sNode->left == nullptr)) {
+		if (parent->right) {
+			if (parent->right->_data == key)
+				parent->right = nullptr;
+		}
+		if (parent->left) {
+			if (parent->left->_data == key)
+				parent->left = nullptr;
+		}
+
+		delete sNode;
+		return root;
+	}
+	swapNodes(sNode);
+	return root;
+
+}
+
 
 // Implement FizzBuzz test:
 // Write a program that prints the numbers from 1 to 100. But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz".For numbers which are multiples of both three and five print "FizzBuzz".
@@ -1497,7 +1598,7 @@ Inorder visit order:
 		Visit Node: 22
 		Visit Node: 23
 */
-	TreeNode *root = new TreeNode(15);
+/*	TreeNode *root = new TreeNode(15);
 	root->left = new TreeNode(8);
 	root->left->right = new TreeNode(9);
 	root->left->right->right = new TreeNode(10);
@@ -1511,6 +1612,33 @@ Inorder visit order:
 	root->right->right = new TreeNode(22);
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
+*/
+
+
+//			  15
+//		  8        20
+//		6   9    19   25
+//     5     10     22  26
+
+	TreeNode *root = new TreeNode(15);
+	root->left = new TreeNode(8);
+	root->left->right = new TreeNode(9);
+	root->left->right->right = new TreeNode(10);
+	root->left->left = new TreeNode(6);
+	root->left->left->left = new TreeNode(5);
+	root->right = new TreeNode(20);
+	root->right->left = new TreeNode(19);
+	root->right->right = new TreeNode(25);
+	root->right->right->left = new TreeNode(22);
+	root->right->right->right = new TreeNode(26);
+
+	if (heightbalanced(root))
+		cout << "Height balanced!" << endl;
+	else 
+		cout << "NOT Height balanced!" << endl;
+
+//	root = deleteNode(root, 5);
+//	Traversals(root, Inorder);
 
 /*
 	int curr = 0;
@@ -1560,8 +1688,8 @@ Inorder visit order:
 
 
 // test code for isanagram
-	bool flag =	isanagram("abcdefs", "fedcbaz");
-	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
+//	bool flag =	isanagram("abcdefs", "fedcbaz");
+//	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
 
 /*
 	if (isBSTInOrder(root))
@@ -1578,10 +1706,10 @@ Inorder visit order:
 	}
 	cout << endl;
 	cout << "Array Size: " << arrsize << endl;
-*/
+
 	vector<string>paths = { "/test/a/a","/test/bc/a","/test/a/",""};
 	cout << commonFilePath(paths) << endl;
-
+*/
 
 };
 
