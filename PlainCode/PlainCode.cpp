@@ -18,6 +18,7 @@ using namespace::std;
 #include <time.h>
 #include <queue>
 
+typedef unsigned char BYTE;
 
 class TreeNode {
 public:
@@ -319,6 +320,20 @@ for (int i = ScrollDelay::Perfect; i <ScrollDelay::NumBuckets; i++) {
 
 memset(_buckets, 0, sizeof(_buckets[0] * ARRAYSIZE(_buckets));
 */
+
+
+void ConvertBytesToHexString(BYTE* bytes, uint16_t numBytes, char* hexString)
+{
+	for (int i = 0; i < numBytes; i++)
+	{
+		int b = (*bytes) >> 4;
+		*hexString++ = static_cast<char>((b <= 9) ? b + '0' : (b - 10) + 'A');
+		b = *bytes & 0x0F;
+		*hexString++ = static_cast<char>((b <= 9) ? b + '0' : (b - 10) + 'A');
+		bytes++;
+	}
+	*hexString++ = '\0';
+}
 
 void reverseoneword(int b, int e, string &s) {
 
@@ -1525,6 +1540,29 @@ string commonFilePath(const vector<string> &paths) {
 }
 
 
+int DiameterBinTreeOpt(TreeNode *root, int &height) {
+	if (root == nullptr) {
+		height = 0;
+		return 0;
+	}
+		
+	int lh = 0;
+	int rh = 0;
+
+	int ld = DiameterBinTreeOpt(root->left, lh);
+	int rd = DiameterBinTreeOpt(root->right, rh);
+
+	height = max(lh, rh) + 1;
+
+	return max((lh + rh + 1),max(ld, rd));
+}
+
+int DiameterBinTreeDriver(TreeNode *root) {
+	int height = 0;
+	return DiameterBinTreeOpt(root, height);
+}
+
+
 int main()
 {
 // Test Code for RemoveDuplicates
@@ -1632,10 +1670,14 @@ Inorder visit order:
 	root->right->right->left = new TreeNode(22);
 	root->right->right->right = new TreeNode(26);
 
-	if (heightbalanced(root))
+/*	if (heightbalanced(root))
 		cout << "Height balanced!" << endl;
 	else 
 		cout << "NOT Height balanced!" << endl;
+*/
+	cout << "Diameter of binary tree: " << DiameterBinTreeDriver(root) << endl;
+
+			
 
 //	root = deleteNode(root, 5);
 //	Traversals(root, Inorder);
@@ -1710,6 +1752,16 @@ Inorder visit order:
 	vector<string>paths = { "/test/a/a","/test/bc/a","/test/a/",""};
 	cout << commonFilePath(paths) << endl;
 */
+
+	BYTE* bytes = nullptr;
+
+	BYTE buff[100];
+	BYTE *hexbuff = nullptr;
+
+	//void ConvertBytesToHexString(BYTE* bytes,int numBytes,char* hexString)
+	//ConvertBytesToHexString(buff, 100, reinterpret_cast<char *> (hexbuff));
+
+	
 
 };
 
