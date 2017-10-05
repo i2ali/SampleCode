@@ -17,6 +17,7 @@ using namespace::std;
 #include <assert.h>
 #include <time.h>
 #include <queue>
+#include <stack>
 
 typedef unsigned char BYTE;
 
@@ -1563,6 +1564,21 @@ int DiameterBinTreeDriver(TreeNode *root) {
 }
 
 
+// perform zigzag traversal of a given binary tree
+void ZigZagTraversal(TreeNode *root) {
+	if (root == nullptr)
+		return;
+
+	// use two stacks to store data, one for L->R, and another for R->L
+	stack<TreeNode *>ltr;
+	stack<TreeNode *>rtl;
+
+
+
+
+}
+
+
 int main()
 {
 // Test Code for RemoveDuplicates
@@ -1753,6 +1769,7 @@ Inorder visit order:
 	cout << commonFilePath(paths) << endl;
 */
 
+	/*
 	BYTE* bytes = nullptr;
 
 	BYTE buff[100];
@@ -1761,7 +1778,7 @@ Inorder visit order:
 	//void ConvertBytesToHexString(BYTE* bytes,int numBytes,char* hexString)
 	//ConvertBytesToHexString(buff, 100, reinterpret_cast<char *> (hexbuff));
 
-	
+	*/
 
 };
 
