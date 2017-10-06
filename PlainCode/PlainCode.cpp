@@ -1582,25 +1582,35 @@ void ZigZagTraversal(TreeNode *root) {
       
 	while (!ltr.empty() || !rtl.empty()) {
 
+		TreeNode *tn = nullptr;
+
 		while (!rtl.empty())
 		{
-			TreeNode *tn = rtl.top();
-			
+			tn = rtl.top();
+			cout << tn->_data << endl;
+
 			if (tn->right)
 				ltr.push(tn->right);
 			if (tn->left)
 				ltr.push(tn->left);
 
+			rtl.pop();
 		}
 
+		while (!ltr.empty()) 
+		{
+			tn = ltr.top();
+			cout << tn->_data << endl;
 
+			if (tn->left)
+				rtl.push(tn->left);
+			if (tn->right)
+				rtl.push(tn->right);
 
+			ltr.pop();
+		}
 
-
-	}
-
-
-
+	} // while
 
 }
 
@@ -1717,9 +1727,9 @@ Inorder visit order:
 	else 
 		cout << "NOT Height balanced!" << endl;
 */
-	cout << "Diameter of binary tree: " << DiameterBinTreeDriver(root) << endl;
+//	cout << "Diameter of binary tree: " << DiameterBinTreeDriver(root) << endl;
 
-			
+	ZigZagTraversal(root);
 
 //	root = deleteNode(root, 5);
 //	Traversals(root, Inorder);
