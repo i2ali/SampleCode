@@ -1614,6 +1614,72 @@ void ZigZagTraversal(TreeNode *root) {
 
 }
 
+/* perform zigzag traversal of a given binary tree
+1
+2      3
+4   5  6  7
+This will result in 1, 2, 3, 7, 6, 5, 4
+*/
+vector<vector<int>> ZigZagTraversalLeetCode(TreeNode *root) {
+
+	vector<vector<int>> output;
+
+	if (root == nullptr)
+		return output;
+
+	// use two stacks to store data, one for L->R, and another for R->L
+	stack<TreeNode *>ltr;
+	stack<TreeNode *>rtl;
+
+	ltr.push(root);
+
+	while (!ltr.empty() || !rtl.empty()) {
+
+		TreeNode *tn = nullptr;
+		vector<int>line;
+
+		while (!ltr.empty())
+		{
+			tn = ltr.top();
+			line.push_back(tn->_data);
+
+			if (tn->left)
+				rtl.push(tn->left);
+			if (tn->right)
+				rtl.push(tn->right);
+
+			ltr.pop();
+		}
+
+		if (!line.empty()) {
+			output.push_back(line);
+			line.clear();
+		}
+
+		while (!rtl.empty())
+		{
+			tn = rtl.top();
+			line.push_back(tn->_data);
+			if (tn->right)
+				ltr.push(tn->right);
+			if (tn->left)
+				ltr.push(tn->left);
+			rtl.pop();
+		}
+
+		if (!line.empty()) {
+			output.push_back(line);
+			line.clear();
+		}
+
+	} // while
+	return output;
+}
+
+
+// implement queue as a stack
+
+
 
 int main()
 {
@@ -1730,6 +1796,15 @@ Inorder visit order:
 //	cout << "Diameter of binary tree: " << DiameterBinTreeDriver(root) << endl;
 
 	ZigZagTraversal(root);
+
+	vector< vector<int>>output;
+	output = ZigZagTraversalLeetCode(root);
+
+	for (auto it = output.begin(); it != output.end(); ++it) {		
+		for (auto itinner = it->begin(); itinner != it->end(); ++itinner) 
+			std::cout << ' ' << *itinner;	
+	}
+	cout << endl;
 
 //	root = deleteNode(root, 5);
 //	Traversals(root, Inorder);
