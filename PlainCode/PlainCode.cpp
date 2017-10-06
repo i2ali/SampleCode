@@ -1564,7 +1564,12 @@ int DiameterBinTreeDriver(TreeNode *root) {
 }
 
 
-// perform zigzag traversal of a given binary tree
+/* perform zigzag traversal of a given binary tree
+             1
+		  2      3
+        4   5  6  7
+ This will result in 1, 2, 3, 7, 6, 5, 4
+ */
 void ZigZagTraversal(TreeNode *root) {
 	if (root == nullptr)
 		return;
@@ -1572,6 +1577,27 @@ void ZigZagTraversal(TreeNode *root) {
 	// use two stacks to store data, one for L->R, and another for R->L
 	stack<TreeNode *>ltr;
 	stack<TreeNode *>rtl;
+
+	rtl.push(root);
+      
+	while (!ltr.empty() || !rtl.empty()) {
+
+		while (!rtl.empty())
+		{
+			TreeNode *tn = rtl.top();
+			
+			if (tn->right)
+				ltr.push(tn->right);
+			if (tn->left)
+				ltr.push(tn->left);
+
+		}
+
+
+
+
+
+	}
 
 
 
