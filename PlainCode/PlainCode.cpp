@@ -360,7 +360,7 @@ void reverseWords(string &s) {
 	if (s.empty())
 		return;
 
-	int len = s.length();
+	int len = (int)s.length();
 
 	int beginindex = 0;
 	int endindex = 0;
@@ -384,7 +384,7 @@ void reverseWords(string &s) {
 	}
 
 	// once all words are reversed, reverse the entire word
-	reverseoneword(0, s.length() - 1, s);
+	reverseoneword(0, (int)(s.length() - 1), s);
 
 	return;
 }
@@ -478,7 +478,7 @@ bool isanagram(const string &s1, const string &s2) {
 
 	if (s1.size() != s2.size()) return false;
 
-	int size = s1.size();
+	int size = (int)s1.size();
 	
 	// put everything first into a hashtable
 	std::unordered_map<char, int> table;
@@ -519,7 +519,7 @@ char findfirstnonrepeatedchar(const string &s) {
 		return ' ';
 	}
 
-	int len = s.length();
+	int len = (int)s.length();
 
 	if (len == 1) {
 		return s[0];
@@ -625,7 +625,7 @@ Determine if there is a loop in this array. A loop starts and ends at a particul
 bool circularArrayLoop(vector<int>& nums) {
 		if (nums.empty()) return false;
 		int index = 0;
-		int size = nums.size();
+		int size = (int)nums.size();
 		int i = 0;
 		int val = 0;
 		bool direction = true;
@@ -962,7 +962,7 @@ NodeSpecial * TraverseBinarySpecial(NodeSpecial *root) {
 
 	while (!myqueue.empty()) {
 
-		int size = myqueue.size(); // only process TreeNodes from last run
+		int size = (int)myqueue.size(); // only process TreeNodes from last run
 		NodeSpecial *node;
 
 		for (int i = 0; i<size; i++) {
@@ -985,8 +985,8 @@ NodeSpecial * TraverseBinarySpecial(NodeSpecial *root) {
 bool substr(string sub, string word) {
 
 
-	int wlen = word.length();
-	int slen = sub.length();
+	int wlen = (int)word.length();
+	int slen = (int)sub.length();
 
 	if (slen > wlen || sub.empty() || word.empty())
 		return false;
@@ -1019,7 +1019,7 @@ bool substr1(char *sub, char *word) {
 	}
 
 	int match_counter = 0;
-	int length_sub = strlen(sub);
+	int length_sub = (int)strlen(sub);
 	// begin points to sub
 	char *pword = word;
 	char *psub = sub;
@@ -1512,7 +1512,7 @@ string commonFilePath(const vector<string> &paths) {
 		return paths[0];
 
 	int lastcommonpath = 0;
-	int pathsize = paths.size();
+	int pathsize = (int)paths.size();
 	bool mismatch = false;
 	char begin;
 	int index = 0;
@@ -1676,9 +1676,63 @@ vector<vector<int>> ZigZagTraversalLeetCode(TreeNode *root) {
 	return output;
 }
 
+// implement queue using stacks
 
-// implement queue as a stack
+template <class A_Type> class MyQueue {
 
+public:
+	void enqueue(A_Type item); // inserts element at back of queue
+	A_Type dequeue(); // retrieve remove element at the front
+	int size(); // return size of queue
+	bool isEmpty();
+
+private:
+	stack<A_Type>input;
+	stack<A_Type>output;
+
+};
+
+template <class A_Type> bool MyQueue<A_Type>::isEmpty()
+{
+	return ((input.empty()) && (output.empty()));
+}
+
+template <class A_Type> int MyQueue<A_Type>::size()
+{
+	return (input.size() + output.size());
+}
+
+template <class A_Type> void MyQueue<A_Type>::enqueue(A_Type item)
+{
+	input.push(item);
+}
+
+// FIFO, so first item that came in will be dequeued
+template <class A_Type> A_Type MyQueue<A_Type>::dequeue()
+{
+	A_Type item;
+	if (!output.empty()) {
+		item = output.top();
+		output.pop();
+		return item;
+	}
+
+	// return an empty object of type A_Type to avoid runtime error
+	if (input.empty())
+		return A_Type();
+
+	// pop all items from input stack and push 
+	while (!input.empty()) {
+		item = input.top();
+		input.pop();
+		output.push(item);
+	}
+
+	item = output.top();
+	output.pop();
+	return item;
+
+}
 
 
 int main()
@@ -1770,6 +1824,19 @@ Inorder visit order:
 	root->right->right->left = new TreeNode(21);
 */
 
+	MyQueue<int>q;
+
+	q.enqueue(1);
+	q.enqueue(2);
+	cout << q.dequeue() << endl;
+	cout << q.dequeue() << endl;
+	cout << q.dequeue() << endl;
+	q.enqueue(3);
+	q.enqueue(4);
+	cout << q.dequeue() << endl;
+	cout << q.dequeue() << endl;
+	q.enqueue(5);
+	cout << q.dequeue() << endl;
 
 //			  15
 //		  8        20
@@ -1795,7 +1862,7 @@ Inorder visit order:
 */
 //	cout << "Diameter of binary tree: " << DiameterBinTreeDriver(root) << endl;
 
-	ZigZagTraversal(root);
+/*	ZigZagTraversal(root);
 
 	vector< vector<int>>output;
 	output = ZigZagTraversalLeetCode(root);
@@ -1805,7 +1872,7 @@ Inorder visit order:
 			std::cout << ' ' << *itinner;	
 	}
 	cout << endl;
-
+*/
 //	root = deleteNode(root, 5);
 //	Traversals(root, Inorder);
 
