@@ -555,6 +555,7 @@ return ' ';
 
 // Given an array of integers, find max subarray sum (for contigous elements) 
 // use Kadane's algorithm
+// TODO: Add variation if list is sorted
 int longestsubarray(int test[], int size) {
 
 	int max_so_far = 0;
@@ -1731,6 +1732,34 @@ template <class A_Type> A_Type MyQueue<A_Type>::dequeue()
 	item = output.top();
 	output.pop();
 	return item;
+
+}
+
+// first find nth last node, one pointer will be at the end, and the other will be at the nth last node
+bool RemoveNthLastNode(LinkedListNode *head, int n) {
+
+	if (head == nullptr)
+		return false;
+
+	LinkedListNode *prev = head;
+	LinkedListNode *curr = head;
+	LinkedListNode *last = head;
+
+	// forward the last pointer n steps forward
+	for (int i = 0; i < n; i++) {
+		last = last->next;
+	}
+	// move both pointers forward at the same time	
+	while (last->next != nullptr) {
+		prev = curr; // cache prev to be the pointer to the node before curr
+		curr = curr->next;
+		last = last->next;	
+	}
+
+	prev->next = curr->next;
+	delete curr;
+
+	return true;
 
 }
 
