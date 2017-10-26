@@ -1760,7 +1760,6 @@ bool RemoveNthLastNode(LinkedListNode *head, int n) {
 	delete curr;
 
 	return true;
-
 }
 
 
@@ -1852,7 +1851,7 @@ Inorder visit order:
 	root->right->right->right = new TreeNode(23);
 	root->right->right->left = new TreeNode(21);
 */
-
+/*
 	MyQueue<int>q;
 
 	q.enqueue(1);
@@ -1866,7 +1865,7 @@ Inorder visit order:
 	cout << q.dequeue() << endl;
 	q.enqueue(5);
 	cout << q.dequeue() << endl;
-
+*/
 //			  15
 //		  8        20
 //		6   9    19   25
@@ -1987,5 +1986,18 @@ Inorder visit order:
 
 	*/
 
+    LinkedListNode *head = new LinkedListNode(1);
+	LinkedListNode *curr = head;
+
+	for (int i = 2; i < 10; i++) {
+		curr->next = new LinkedListNode(i);
+		curr = curr->next;
+	}
+
+	RemoveNthLastNode(head, 8);
+
+	// print list
+
+	
 };
 
