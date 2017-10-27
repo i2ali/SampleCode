@@ -1736,19 +1736,31 @@ template <class A_Type> A_Type MyQueue<A_Type>::dequeue()
 }
 
 // first find nth last node, one pointer will be at the end, and the other will be at the nth last node
-bool RemoveNthLastNode(LinkedListNode *head, int n) {
+LinkedListNode* RemoveNthLastNode(LinkedListNode *head, int n) {
 
-	if (head == nullptr)
-		return false;
-
+	if ((head == nullptr) || (head->next == nullptr))
+		return nullptr;
+	
 	LinkedListNode *prev = head;
 	LinkedListNode *curr = head;
 	LinkedListNode *last = head;
 
 	// forward the last pointer n steps forward
-	for (int i = 0; i < n; i++) {
+	for (int i = 1; i < n; i++) {
 		last = last->next;
 	}
+
+	// n > size of list
+	if (last == nullptr)
+		return nullptr;
+
+	// n = size of list
+	if (last->next == nullptr) {
+		curr = curr->next;
+		delete prev;
+		return curr;
+	}
+
 	// move both pointers forward at the same time	
 	while (last->next != nullptr) {
 		prev = curr; // cache prev to be the pointer to the node before curr
@@ -1759,7 +1771,7 @@ bool RemoveNthLastNode(LinkedListNode *head, int n) {
 	prev->next = curr->next;
 	delete curr;
 
-	return true;
+	return head;
 }
 
 
@@ -1989,14 +2001,26 @@ Inorder visit order:
     LinkedListNode *head = new LinkedListNode(1);
 	LinkedListNode *curr = head;
 
-	for (int i = 2; i < 10; i++) {
+	for (int i = 2; i <= 10; i++) {
 		curr->next = new LinkedListNode(i);
 		curr = curr->next;
 	}
 
-	RemoveNthLastNode(head, 8);
+	curr = head;
+	while (curr) {
+		cout << curr->_val << endl;
+		curr = curr->next;
+	}
+	cout << "========================" << endl;
+
+	curr = RemoveNthLastNode(head, 2);
 
 	// print list
+
+	while (curr) {
+		cout << curr->_val << endl;
+		curr = curr->next;
+	}
 
 	
 };
