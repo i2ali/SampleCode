@@ -1677,6 +1677,86 @@ vector<vector<int>> ZigZagTraversalLeetCode(TreeNode *root) {
 	return output;
 }
 
+
+
+
+template <class Key, class Value> class Hashnode {
+public:
+	Key key;
+	Value val;
+	Hashnode *next;
+	Hashnode() { next = nullptr; }
+	Hashnode(Key k, Value v) { 
+		key = k; 
+		val = v; 
+		next = nullptr;
+	}
+};
+
+// design hashtable using arrays
+template <class Key, class Value> class Hashtable {
+
+public:
+	bool put(Key k, Value v);
+	Value get(Key k);
+
+private:
+	std::vector <Hashnode<Key,Value>> table;
+	int size() { return table.size(); }
+	int hash(Key k) {
+		return (k % this.size());
+	}
+};
+
+template <class Key, class Value> bool Hashtable<Key, Value>::put(Key k, Value v)
+{
+	int index = hash(k);
+	if (index > this.size())
+		table.resize(index + 1);
+	if (table[index] == nullptr)
+		table[index] = new Hashnode(k, v);
+	else {
+		Hashnode *temp = table[index];
+		while (temp->next) {
+			temp = temp->next;
+		}
+		temp->next = new Hashnode(k, v);
+	}
+}
+
+template <class Key, class Value> Value Hashtable<Key, Value>::get(Key k) 
+{
+	// check if exists
+	int index = hash(k);
+    
+	if (index > this.size()) {
+		return null;
+	}
+
+	if (table[index] != nullptr) {
+		if (table[index].key == k) {
+			return table[index].val;
+		}
+		else {
+			Hashnode * temp = table[index];
+			while (temp->next) {
+				if (table[index].key == k) {
+					return table[index].val;
+				}
+				temp = temp->next;
+			}
+			// did not find key
+			return null;
+		}
+	}
+	else
+		return null;
+}
+
+
+// design hashtable using static
+
+
 // implement queue using stacks
 
 template <class A_Type> class MyQueue {
