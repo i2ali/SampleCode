@@ -1704,14 +1704,15 @@ public:
 private:
 	std::vector <Hashnode<Key,Value> *> table;
 	int size() { return table.size(); }
-	int hash(Key k) { 
-		return reinterpret_cast<int>(k) % table.size();
+	size_t hash(Key k) { 
+		std::hash<Key> hsh;
+		return (hsh(k)) % table.size();
 	}
 };
 
 template <class Key, class Value> void Hashtable<Key, Value>::put(Key k, Value v)
 {
-	int index = hash(k);
+	size_t index = hash(k);
 	if (index > table.size())
 		table.resize(index + 1);
 	if (table[index] == nullptr) {
@@ -1756,7 +1757,7 @@ template <class Key, class Value> Value Hashtable<Key, Value>::get(Key k)
 }
 
 
-// design hashtable using static
+// design hashtable using static arrays
 
 
 // implement queue using stacks
@@ -1856,6 +1857,32 @@ LinkedListNode* RemoveNthLastNode(LinkedListNode *head, int n) {
 	return head;
 }
 
+LinkedListNode* mergeTwoLists(LinkedListNode *l1, LinkedListNode *l2) {
+
+	if ((l1 == nullptr) && (l2 == nullptr))
+		return nullptr;
+	if (l1 == nullptr)
+		return l2;
+	else if (l2 == nullptr)
+		return l1;
+
+	LinkedListNode *head = nullptr;
+	LinkedListNode *currl1 = nullptr;
+	LinkedListNode *currl2 = nullptr;
+
+	//determine head pointer
+	if ((l1->_val) < (l2->_val))
+		head = l1;
+	if ((l2->_val) < (l1->_val))
+		head = l2;
+	// duplicate vals?
+
+
+
+
+
+
+}
 
 int main()
 {
@@ -2106,9 +2133,9 @@ Inorder visit order:
 	}
 */
 
-//	Hashtable<std::string, std::string>ht;
+	Hashtable<std::string, std::string>ht;
 
-//	ht.put("Test", "One");
+	ht.put("Test", "One");
 
 
 
