@@ -1678,15 +1678,14 @@ vector<vector<int>> ZigZagTraversalLeetCode(TreeNode *root) {
 }
 
 
-
-
-template <class Key, class Value> class Hashnode {
+template <typename Key, typename Value> 
+class Hashnode {
 public:
 	Key key;
 	Value val;
 	Hashnode *next;
 	Hashnode() { next = nullptr; }
-	Hashnode(Key k, Value v) { 
+	Hashnode(const Key &k, const Value &v) { 
 		key = k; 
 		val = v; 
 		next = nullptr;
@@ -1694,33 +1693,36 @@ public:
 };
 
 // design hashtable using arrays
-template <class Key, class Value> class Hashtable {
+template <typename Key, typename Value> 
+class Hashtable {
 
 public:
-	bool put(Key k, Value v);
+	void put(Key k, Value v);
 	Value get(Key k);
+	bool isEmpty() { return (this.size() == 0); }
 
 private:
-	std::vector <Hashnode<Key,Value>> table;
+	std::vector <Hashnode<Key,Value> *> table;
 	int size() { return table.size(); }
-	int hash(Key k) {
-		return (k % this.size());
+	int hash(Key k) { 
+		return reinterpret_cast<int>(k) % table.size();
 	}
 };
 
-template <class Key, class Value> bool Hashtable<Key, Value>::put(Key k, Value v)
+template <class Key, class Value> void Hashtable<Key, Value>::put(Key k, Value v)
 {
 	int index = hash(k);
-	if (index > this.size())
+	if (index > table.size())
 		table.resize(index + 1);
-	if (table[index] == nullptr)
-		table[index] = new Hashnode(k, v);
+	if (table[index] == nullptr) {
+		table[index] = new Hashnode<Key, Value>(k,v);
+	}
 	else {
-		Hashnode *temp = table[index];
+		Hashnode<Key,Value> *temp = table[index];
 		while (temp->next) {
 			temp = temp->next;
 		}
-		temp->next = new Hashnode(k, v);
+		temp->next = new Hashnode<Key,Value>(k, v);
 	}
 }
 
@@ -1738,7 +1740,7 @@ template <class Key, class Value> Value Hashtable<Key, Value>::get(Key k)
 			return table[index].val;
 		}
 		else {
-			Hashnode * temp = table[index];
+			Hashnode *temp = table[index];
 			while (temp->next) {
 				if (table[index].key == k) {
 					return table[index].val;
@@ -2078,6 +2080,7 @@ Inorder visit order:
 
 	*/
 
+/*
     LinkedListNode *head = new LinkedListNode(1);
 	LinkedListNode *curr = head;
 
@@ -2101,6 +2104,14 @@ Inorder visit order:
 		cout << curr->_val << endl;
 		curr = curr->next;
 	}
+*/
+
+//	Hashtable<std::string, std::string>ht;
+
+//	ht.put("Test", "One");
+
+
+
 
 	
 };
