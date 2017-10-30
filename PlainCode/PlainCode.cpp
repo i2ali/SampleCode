@@ -1867,21 +1867,57 @@ LinkedListNode* mergeTwoLists(LinkedListNode *l1, LinkedListNode *l2) {
 		return l1;
 
 	LinkedListNode *head = nullptr;
-	LinkedListNode *currl1 = nullptr;
-	LinkedListNode *currl2 = nullptr;
+	LinkedListNode *currl1 = l1;
+	LinkedListNode *currl2 = l2;
 
 	//determine head pointer
-	if ((l1->_val) < (l2->_val))
+	if ((l1->_val) <= (l2->_val))
 		head = l1;
 	if ((l2->_val) < (l1->_val))
 		head = l2;
 	// duplicate vals?
 
 
+	while (currl1 && currl2) {
+		LinkedListNode *temp = nullptr;
 
+		while (currl1->_val <= currl2->_val)
+		{
+			if (currl1->next == nullptr) {
+				currl1->next = currl2;
+				currl1 = nullptr;
+				return head;
+			}
+			if (currl1->next->_val <= currl2->_val) {
+				currl1 = currl1->next;
+			}
+			else {
+				temp = currl1->next;
+				currl1->next = currl2;
+				currl1 = temp;
+				break;
+			}
+		} // while
 
-
-
+		while (currl2->_val <= currl1->_val)
+		{
+			if (currl2->next == nullptr) {
+				currl2->next = currl1;
+				currl2 = nullptr;
+				return head;
+			}
+			if (currl2->next->_val <= currl1->_val) {
+				currl2 = currl2->next;
+			}
+			else {
+				temp = currl2->next;
+				currl2->next = currl1;
+				currl2 = temp;
+				break;
+			}
+		} // while
+	} // while
+	return head;
 }
 
 int main()
@@ -2133,13 +2169,27 @@ Inorder visit order:
 	}
 */
 
+/*
 	Hashtable<std::string, std::string>ht;
 
 	ht.put("Test", "One");
+*/
+
+LinkedListNode *l1 = new LinkedListNode(1);
+l1->next = new LinkedListNode(5);
+l1->next->next = new LinkedListNode(100);
+l1->next->next->next = nullptr;
+
+LinkedListNode *l2 = new LinkedListNode(2);
+l2->next = new LinkedListNode(5);
+l2->next->next = new LinkedListNode(9);
+l1->next->next->next = nullptr;
 
 
-
-
-	
+LinkedListNode *curr = mergeTwoLists(l1,l2);
+while (curr) {
+	cout << curr->_val << endl;
+	curr = curr->next;
+}	
 };
 
