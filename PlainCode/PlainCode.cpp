@@ -761,9 +761,65 @@ int getMinSquares(int n)
 	return res;
 }
 
+//determine if number is a prime number
+
+/* optimizations: 
+	even numbers are not prime, except for 2
+    no need to check for numbers beyond square root of the target number. 
+	m = sqrt(n) - if n divides a number greater than m, then the result will be less than m, then n will also divide 
+	a number <= m. Basically as the denominator increases, we will get numbers < m, which we would have already checked, 
+	so this is redundant.  
+*/
+bool isPrime(int n) {
+
+	if (n <= 1)
+		return false;
+	if (n == 2)
+		return true;
+	if (n % 2 == 0) 
+		return false;
+     
+	int m = (int)sqrt(n);
+
+	for (int i = 3; i <= m; i+=2) {
+
+		if (n % i == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+
 // Count the number of prime numbers less than a non - negative number, n.
 // To determine if a number is prime, check if it is not divisible by any number less than n. 
-// The runtime complexity of isPrime function would be O(n) and hence counting the total prime numbers up to n would be O(n2). 
+// Lets use the Sieve of Erathosnes
+// return a list of primes in the form of a boolean array
+// consumer passes in array of bool of size i
+bool * returnPrimes(int numprime, size_t &size) {
+
+	bool *primes = new bool[numprime+1];
+	for (int i = 0; i <= numprime; i++)
+		primes[i] = true;
+
+	primes[0] = false;
+	primes[1] = false;
+
+	int m = (int)sqrt(numprime);
+
+	for (int i = 2; i <= m; i++) {
+		if (isPrime(i)){
+			for (int k = i*i; k <= numprime; k += i)
+				primes[k] = false;
+		}
+	} // for
+
+	size = numprime+1;
+	return primes;
+}
+
+
+// find median of two sorted arrays
 
 
 /*
@@ -2175,6 +2231,7 @@ Inorder visit order:
 	ht.put("Test", "One");
 */
 
+/*
 LinkedListNode *l1 = new LinkedListNode(1);
 l1->next = new LinkedListNode(5);
 l1->next->next = new LinkedListNode(100);
@@ -2190,6 +2247,22 @@ LinkedListNode *curr = mergeTwoLists(l1,l2);
 while (curr) {
 	cout << curr->_val << endl;
 	curr = curr->next;
-}	
+}
+*/
+
+for (int i = 0; i <= 1000; i++) {
+	if (isPrime(i)) cout << "Prime number: " << i << endl;
+}
+
+bool *primes;
+size_t size;
+primes = returnPrimes(1000, size);
+cout << "====================" << endl;
+
+for (int i = 0; i < size; i++) {
+	if (primes[i]) cout << "Prime number: " << i << endl;
+}
+delete [] primes;
+
 };
 
