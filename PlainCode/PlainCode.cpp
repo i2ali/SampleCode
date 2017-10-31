@@ -761,8 +761,33 @@ int getMinSquares(int n)
 	return res;
 }
 
-//determine if number is a prime number
 
+// GCD(a,b) - Greatest Common Divisor
+// the largest number that cleanly divides a and b
+int gcd(const int a, const int b) {
+	int min = std::min(a, b);
+	
+	for (int i = min; i > 0; i--) {
+		if ((a % i == 0) && (b % i == 0)) {
+			return i;
+		}
+	}
+	return min;
+}
+
+// Euclid's algorithm
+// gcd(a,b) = 
+//           a = b * n + (a % b)
+//           b = (a % b) * n + (a % b)  (first a%b is from previous step)
+//           do above until a%b=0, i.e. until we have no remainder 
+int gcdfast(int a, int b) {
+	if (b == 0) return a;
+	cout << "A: " << a << " B: " << b <<  " A % B : " << a % b << endl;
+	return gcdfast(b, a % b);
+}
+
+
+//determine if number is a prime number
 /* optimizations: 
 	even numbers are not prime, except for 2
     no need to check for numbers beyond square root of the target number. 
@@ -808,7 +833,7 @@ bool * returnPrimes(int numprime, size_t &size) {
 	int m = (int)sqrt(numprime);
 
 	for (int i = 2; i <= m; i++) {
-		if (isPrime(i)){
+		if (primes[i]){
 			for (int k = i*i; k <= numprime; k += i)
 				primes[k] = false;
 		}
@@ -1036,6 +1061,34 @@ NodeSpecial * TraverseBinarySpecial(NodeSpecial *root) {
 	}
 	return nullptr;
 }
+
+// almost the same as my other implementation, but a little more simpler imo
+bool substrTest(string A, string B) {
+
+	int Alen = (int)A.length();
+	int Blen = (int)B.length();
+
+	if (Alen > Blen || A.empty() || B.empty())
+		return false;
+	int ACount = 0;
+	int BCount = 0;
+
+	while (BCount < Blen) 
+	{
+		if (A[ACount] == B[BCount]) {
+			ACount++;
+			if (ACount == Alen) {
+				return true;
+			}
+		}
+		else {
+			ACount = 0;
+		}
+		BCount++;
+	} // while
+	return false;
+}
+
 
 // is sub a substring of word?
 // uses string C++ class
@@ -1998,6 +2051,14 @@ int main()
 */
 
 // Test Code for substr
+
+	string word = "ATATAS";
+	string sub = "AS";
+	cout << "Is this: " << sub << " a substring of: " << word << " ?" << endl;
+	cout << "Answer: " << substrTest(sub, word) << endl;
+   
+
+
 /*	char *word = "ABABAB";
 	char *sub = "AC";
 
@@ -2250,19 +2311,24 @@ while (curr) {
 }
 */
 
-for (int i = 0; i <= 1000; i++) {
+/*
+for (int i = 0; i <= 100; i++) {
 	if (isPrime(i)) cout << "Prime number: " << i << endl;
 }
 
 bool *primes;
 size_t size;
-primes = returnPrimes(1000, size);
+primes = returnPrimes(100, size);
 cout << "====================" << endl;
 
 for (int i = 0; i < size; i++) {
 	if (primes[i]) cout << "Prime number: " << i << endl;
 }
 delete [] primes;
+*/
+
+//cout << gcdfast(2336, 1314) << endl;
+
 
 };
 
