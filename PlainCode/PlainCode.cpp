@@ -1227,6 +1227,10 @@ void FindMthNodeinBST(TreeNode *root, int target, int *curr) {
 	FindMthNodeinBST(root->right, target, curr);
 }
 
+
+
+
+
 // assume a null terminated string
 // declare string as char str[] = "foobar";
 void reverse(char *str) {
@@ -1251,6 +1255,28 @@ void reverse(char *str) {
 		end--;
 		str++;
 	}
+
+}
+
+/*
+Rotate Image:
+| 1 2 3 |     | 7 4 1 | 
+| 4 5 6 |  -> | 8 5 2 |
+| 7 8 9 |     | 9 6 3 |
+
+First we can rotate across the diagonal:
+| 7 4 1 |
+| 8 5 2 |
+| 9 6 3 |
+
+
+*/
+void RotateMatrix(vector<vector<int>>& matrix) {  
+	
+	// first 
+
+
+
 
 }
 
