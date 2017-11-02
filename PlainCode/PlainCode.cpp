@@ -1264,19 +1264,34 @@ Rotate Image:
 | 4 5 6 |  -> | 8 5 2 |
 | 7 8 9 |     | 9 6 3 |
 
-First we can rotate across the diagonal:
-| 7 4 1 |
-| 8 5 2 |
-| 9 6 3 |
+First we rotate across the diagonal:
+| 1 2 3 |     | 1 4 7 | 
+| 4 5 6 |  -> | 2 5 8 |
+| 7 8 9 |     | 3 6 9 | 
 
+Swap across the middle vertical axis:
+| 1 4 7 |     | 7 4 1 |
+| 2 5 8 |  -> | 8 5 2 | 
+| 3 6 9 |     | 9 6 3 |
 
 */
 void RotateMatrix(vector<vector<int>>& matrix) {  
-	
-	// first 
+	// rotate across the diagnonal
+	int n = matrix.size();
+	int temp;
 
+/*	0,1 -> 1,0
+    0,2 -> 2,0
+	1,2 -> 2,1
+	*/
 
-
+	for (int i = 0; i < n -1; i++) {
+		for (int j = 1; j < n; j++) {
+			temp = matrix[j, i];
+			matrix[j, i] = matrix[i, j];
+			matrix[i, j] = temp;
+		}
+	}
 
 }
 
