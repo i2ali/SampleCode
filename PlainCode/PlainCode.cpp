@@ -1275,24 +1275,56 @@ Swap across the middle vertical axis:
 | 3 6 9 |     | 9 6 3 |
 
 */
+
+void PrintMatrix(vector<vector<int>>& matrix) {
+	int n = (int)matrix.size();
+	cout << endl;
+	for (int i = 0; i < n; i++) {
+		cout << "| ";
+		for (int j = 0; j < matrix[i].size(); j++) {
+			cout << matrix[i][j] << " ";
+		}
+		cout << " |" << endl;
+	}
+}
+
 void RotateMatrix(vector<vector<int>>& matrix) {  
-	// rotate across the diagnonal
-	int n = matrix.size();
+
+	int n = (int)matrix.size();
+	// Check to see if this is a NxN matrix
+	if (matrix[0].size() != n) {
+		return;
+	}
 	int temp;
 
+	PrintMatrix(matrix);
+	// rotate across the diagnonal
 /*	0,1 -> 1,0
     0,2 -> 2,0
 	1,2 -> 2,1
-	*/
-
+*/
 	for (int i = 0; i < n -1; i++) {
 		for (int j = 1; j < n; j++) {
-			temp = matrix[j, i];
-			matrix[j, i] = matrix[i, j];
-			matrix[i, j] = temp;
+			temp = matrix[j][i];
+			matrix[j][i] = matrix[i][j];
+			matrix[i][j] = temp;
 		}
 	}
-
+	
+	PrintMatrix(matrix);
+	// rotate across vertical
+/*	0,0 -> 0,2
+	1,0 -> 1,2
+	2,0 -> 2,2
+*/
+	for (int j = 0; j < n/2; j++) {
+		for (int i = 0; i < n; i++) {
+			temp = matrix[i][n-j-1];
+			matrix[i][n-j-1] = matrix[i][j];
+			matrix[i][j] = temp;
+		}
+	}
+	PrintMatrix(matrix);
 }
 
 LinkedListNode * LinkedListDetectCircularLoop(LinkedListNode *start) {
@@ -2091,14 +2123,14 @@ int main()
 	}
 */
 
-// Test Code for substr
+/* Test Code for substr
 
 	string word = "ATATAS";
 	string sub = "AS";
 	cout << "Is this: " << sub << " a substring of: " << word << " ?" << endl;
 	cout << "Answer: " << substrTest(sub, word) << endl;
    
-
+*/
 
 /*	char *word = "ABABAB";
 	char *sub = "AC";
@@ -2181,7 +2213,7 @@ Inorder visit order:
 	q.enqueue(5);
 	cout << q.dequeue() << endl;
 */
-//			  15
+/*			  15
 //		  8        20
 //		6   9    19   25
 //     5     10     22  26
@@ -2197,7 +2229,7 @@ Inorder visit order:
 	root->right->right = new TreeNode(25);
 	root->right->right->left = new TreeNode(22);
 	root->right->right->right = new TreeNode(26);
-
+*/
 /*	if (heightbalanced(root))
 		cout << "Height balanced!" << endl;
 	else 
@@ -2370,6 +2402,13 @@ delete [] primes;
 
 //cout << gcdfast(2336, 1314) << endl;
 
+vector<vector<int>> mat1 = { {1,2,3},{4,5,6},{7,8,9} };
+
+RotateMatrix(mat1);
+
+vector<vector<int>> mat2 = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+
+RotateMatrix(mat2);
 
 };
 
