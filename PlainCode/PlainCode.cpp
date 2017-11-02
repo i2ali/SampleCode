@@ -2102,6 +2102,53 @@ LinkedListNode* mergeTwoLists(LinkedListNode *l1, LinkedListNode *l2) {
 	return head;
 }
 
+/*
+
+
+*/
+
+class GameBoard {
+public:
+	virtual int TakeTurn() = 0;
+};
+
+class Board : GameBoard {
+private:
+	vector<vector<int>>board;
+public:
+	int TakeTurn() { return 0; }
+};
+
+class Player {
+private:
+	int playerId;
+	vector <Player> friendList;
+public:
+	virtual int GetPlayerId() const{
+		return playerId;
+	}
+	virtual bool isFriend(const Player player) {
+		for (auto i = friendList.begin(); i != friendList.end(); i++) {
+			if ((*i).GetPlayerId() == player.GetPlayerId()) {
+				return true;
+			}
+		} // for
+		return false;
+	}
+};
+
+
+class TicTacToe {
+private: 
+	Board *gameboard;
+protected:
+	
+public:
+	TicTacToe() {
+		gameboard = new Board();
+	}
+};
+
 int main()
 {
 // Test Code for RemoveDuplicates
