@@ -1092,7 +1092,7 @@ bool substrTest(string A, string B) {
 
 // is sub a substring of word?
 // uses string C++ class
-bool substr(string sub, string word) {
+bool substrTest1(string sub, string word) {
 
 
 	int wlen = (int)word.length();
@@ -2107,16 +2107,10 @@ LinkedListNode* mergeTwoLists(LinkedListNode *l1, LinkedListNode *l2) {
 
 */
 
+// abstract class just for the fun of it 
 class GameBoard {
 public:
 	virtual int TakeTurn() = 0;
-};
-
-class Board : GameBoard {
-private:
-	vector<vector<int>>board;
-public:
-	int TakeTurn() { return 0; }
 };
 
 class Player {
@@ -2124,7 +2118,11 @@ private:
 	int playerId;
 	vector <Player> friendList;
 public:
-	virtual int GetPlayerId() const{
+	// TODO: do not allow users to set 0 as that is reserved
+	Player(int i) {
+		playerId = i; 
+	}
+	virtual int GetPlayerId() const {
 		return playerId;
 	}
 	virtual bool isFriend(const Player player) {
@@ -2138,15 +2136,131 @@ public:
 };
 
 
-class TicTacToe {
+/* given a compressed 
+3[ab4[xyz]c]4[ab]c
+output to a string or to standard
+*/
+//TODO: Deal with case for recursion
+void Decompress(const string input, string &output) {
+
+	int len = (int)input.length();
+	int count = 0;
+
+	while (count < len) {
+		// check to see if number
+		if (isdigit(input[count])) {   
+			int startingindex = count;
+			int intlen = 1;
+			while (isdigit(input[count])) {
+				intlen++;
+				count++;
+			}
+			int num = atoi((input.substr(startingindex,intlen)).c_str());
+			count+=2;  
+
+			int begin = count;
+
+			// skip to end of ']'
+			while (input[count] != ']') {
+				count++;
+			}
+	         
+			for (int j = 0; j < num; j++) {
+				for (int i = begin; i <= count; i++) {
+					output += input[i];
+				}
+			}
+		}
+		else{
+			output += input[count];
+			count++;
+		}
+	}
+}
+
+class TicTacToeBoard : GameBoard {
+private:
+	vector<vector<int>>board;
+	int dim;
+public:
+	int TakeTurn() { return 0; }
+	bool InitializeBoard(int dimension) {
+		dim = dimension;
+		// take the perf hit of allocating board up-front with default values
+		for (int i = 0; i < dimension; i++) {
+			board[i].resize(dimension-1, 0);
+		}
+		return true;
+	}
+	//return 0 if no winner - we should probably change to another system later
+	int CalculateWinner() {
+		// special case is board is only one square
+		if (dim == 1)
+			return board[0][0];
+	
+		// O(n^2) solution
+		// iterate through rows and columns + diagonals for winner
+
+		bool winner = true;
+		int currplayer = 0;
+
+		//check rows
+		for (int i = 0; i < dim; i++) {
+			currplayer = board[i][0];
+			winner = true;
+			for (int j = 1; j < dim; j++) {
+				if (board[i][j] != currplayer)
+					winner = false;
+			}
+			if (winner) return currplayer;
+		}
+
+		//check columns
+		for (int j = 0; j < dim; j++) {
+			currplayer = board[0][j];
+			winner = true;
+			for (int i = 1; i < dim; i++) {
+				if (board[i][j] != currplayer)
+					winner = false;
+			}
+			if (winner) return currplayer;
+		}
+
+		//check diagonals
+		currplayer = board[0][0];
+		winner = true;
+		for (int i = 1; i < dim; i++) {
+			if (board[i][i] != currplayer)
+				winner = false;
+		}
+		if (winner) return currplayer;
+		
+		currplayer = board[0][dim-1];
+		winner = true;
+		for (int i = 1; i < dim; i++) {
+			if (board[i][dim-i-1] != currplayer)
+				winner = false;
+		}
+		if (winner) return currplayer;
+
+		return 0;
+	}
+};
+
+class TicTacToeGame {
 private: 
-	Board *gameboard;
+	TicTacToeBoard *gameboard;
 protected:
 	
 public:
-	TicTacToe() {
-		gameboard = new Board();
+	TicTacToeGame(int boardsize) {
+		gameboard = new TicTacToeBoard();
+		gameboard->InitializeBoard(boardsize);
 	}
+	int WhoWon(){
+		return gameboard->CalculateWinner();
+	}
+
 };
 
 int main()
@@ -2447,7 +2561,7 @@ for (int i = 0; i < size; i++) {
 delete [] primes;
 */
 
-//cout << gcdfast(2336, 1314) << endl;
+/*cout << gcdfast(2336, 1314) << endl;
 
 vector<vector<int>> mat1 = { {1,2,3},{4,5,6},{7,8,9} };
 
@@ -2456,6 +2570,14 @@ RotateMatrix(mat1);
 vector<vector<int>> mat2 = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
 
 RotateMatrix(mat2);
+*/
+
+//TicTacToeGame *tictac = new TicTacToeGame(5);
+//cout << tictac->WhoWon() << endl;
+
+string output;
+Decompress("Testing4[abc]", output);
+cout << output << endl;
 
 };
 
