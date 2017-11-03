@@ -2156,7 +2156,7 @@ void Decompress(const string input, string &output) {
 				count++;
 			}
 			int num = atoi((input.substr(startingindex,intlen)).c_str());
-			count+=2;  
+			count++;  
 
 			int begin = count;
 
@@ -2166,16 +2166,63 @@ void Decompress(const string input, string &output) {
 			}
 	         
 			for (int j = 0; j < num; j++) {
-				for (int i = begin; i <= count; i++) {
+				for (int i = begin; i < count; i++) {
 					output += input[i];
 				}
 			}
+			count++;
 		}
 		else{
 			output += input[count];
 			count++;
 		}
 	}
+}
+
+//3[ab4[xyz]c]4[ab]c
+// deals with recursive case as above
+string Decompress1(string input) {
+
+	if (input == "")
+		return "";
+	// process string
+
+	int len = (int)input.length();
+	string output;
+
+	int count = 0;
+	int intlen = 0;
+	// look for first number
+	int startingindex = count;
+
+	while (isdigit(input[count])) {
+		intlen++;
+		count++;
+	}
+	int num = atoi((input.substr(startingindex, intlen)).c_str());
+	count++;
+
+	int begin = count;
+
+	// skip to end of ']'
+	while (input[count] != ']') {
+		// if we run into another number
+		if (isdigit(input[count])) {
+			input.find_first_of(']');
+			output += Decompress(input.substr());
+		}
+		count++;
+	}
+
+	for (int j = 0; j < num; j++) {
+		for (int i = begin; i < count; i++) {
+			output += input[i];
+		}
+	}
+	count++;
+     
+	output += Decompress1(input.substr(first, second - first - 1).c_str());
+
 }
 
 class TicTacToeBoard : GameBoard {
@@ -2576,7 +2623,7 @@ RotateMatrix(mat2);
 //cout << tictac->WhoWon() << endl;
 
 string output;
-Decompress("Testing4[abc]", output);
+Decompress("9[abc]2[def]", output);
 cout << output << endl;
 
 };
