@@ -2140,7 +2140,7 @@ public:
 3[ab4[xyz]c]4[ab]c
 output to a string or to standard
 */
-//TODO: Deal with case for recursion
+// only works for non recursive cases
 void Decompress(const string input, string &output) {
 
 	int len = (int)input.length();
@@ -2179,9 +2179,11 @@ void Decompress(const string input, string &output) {
 	}
 }
 
-
-
-void DecompressRec(const string input, string &output) {
+// partially working implementation, does not work for deeply nested case
+// TODO: fix this
+// another method is to use two stacks as per here: (one for integers and another for chars)
+// http://www.geeksforgeeks.org/decode-string-recursively-encoded-count-followed-substring/
+void DecompressRec( const string input, string &output) {
 
 	int len = (int)input.length();
 	int count = 0;
@@ -2199,22 +2201,28 @@ void DecompressRec(const string input, string &output) {
 			count++;
 
 			int begin = count;
+			string buffer;
 
 			// skip to end of ']'
 			while (input[count] != ']') {
-				count++;
+				if (!isdigit(input[count])) {
+					buffer += input[count];
+					count++;
+			    }
 				if (isdigit(input[count])) { 
                     int end = (int) input.find_first_of(']'); 
 					// recursively call Decompress. 
 					DecompressRec(input.substr(count, end - count + 1),output);
+					buffer += output;
+					output.clear();
+					count = end + 1;
 				}
 			}
 
 			for (int j = 0; j < num; j++) {
-				for (int i = begin; i < count; i++) {
-					output += input[i];
-				}
+				output += buffer;
 			}
+			buffer.clear();
 			count++;
 		}
 		else {
@@ -2622,7 +2630,11 @@ RotateMatrix(mat2);
 //cout << tictac->WhoWon() << endl;
 
 string output;
-DecompressRec("1[ab1[cd]]", output);
+//DecompressRec("2[2[cd]2[xy]]", output);
+//DecompressRec("2[ab2[xy]2[ab]]", output);
+DecompressRec("3[b2[ca]]", output);
+//DecompressRec("1[1[x]]", output);
+
 cout << output << endl;
 
 };
