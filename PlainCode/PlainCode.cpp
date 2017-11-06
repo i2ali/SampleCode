@@ -272,6 +272,52 @@ void concat(BiNode *x, BiNode *y) {
 	y->node1 = x;
 }
 
+
+class Node {
+public:
+	int val;
+	Node *right;
+	Node *left;
+	Node() { left = nullptr; right = nullptr; }
+	explicit Node(int data) { val = data; left = nullptr; right = nullptr; }
+	virtual ~Node() {}
+};
+
+
+// given linked list, find midpoint and return pointer to that
+LinkedListNode *FindMidpoint(LinkedListNode *head, LinkedListNode *tail) {
+	if (head == nullptr) return nullptr;
+	if (head == tail) return head;
+	LinkedListNode *curr = head;
+	int size = 0;
+	for (; curr!=tail; ++size) {
+		curr = curr->next;
+	}
+	int mid = size / 2;
+	curr = head;
+	for (int i = 0; i < mid; ++i) {
+		curr = curr->next;
+	}
+	return curr;
+}
+
+Node* ConvertLinkedListtoBSTHelper(LinkedListNode *head,LinkedListNode *tail) {
+	if (head == nullptr)
+		return nullptr;
+
+	LinkedListNode *mid = FindMidpoint(head,tail);
+    //TODO: mid == null?
+	Node *root = new Node(mid->_val);
+	root->left = ConvertLinkedListtoBSTHelper(head, mid);
+	root->right = ConvertLinkedListtoBSTHelper(mid->next,tail);
+     
+	return root;
+}
+
+Node* ConvertLinkedListtoBst(LinkedListNode *head) {
+	return ConvertLinkedListtoBSTHelper(head, nullptr);
+}
+
 // convert a binary search tree to a doublylinked list
 // Algorithm: use an in-order traversal
 NodePair* ConvertBSTtoLinkedList(BiNode *root){
@@ -291,6 +337,67 @@ NodePair* ConvertBSTtoLinkedList(BiNode *root){
 	}
 
 	return new NodePair(part1 ? part1->head : root, part2 ? part2->tail : root);
+}
+
+// do a reverse in-order traversal
+// example:
+/*
+      A
+   B    C
+  D E  F G
+Resulting list :  head-> D B E A F C G
+
+G->right = *head                     G = *head 
+*head->left = G;
+*head = G
+C->right = head                  *head -> C = G  
+*head->left = C
+*head = C
+*/
+void ConvertBSTtoLinkedList1(Node *root, Node **head) {
+	if (root == nullptr)
+		return;
+
+	ConvertBSTtoLinkedList1(root->right, head);
+
+	root->right = *head;
+
+	if (*head != nullptr)
+	   (*head)->left = root;
+
+	// update new pointer to head
+	*head = root;
+
+	ConvertBSTtoLinkedList1(root->left, head);
+}
+
+// Binary Search on a BST
+bool BinarySearch(Node *root, int target) {
+	if (root == nullptr)
+		return false;
+	if (root->val == target)
+		return true;
+	else if (target < root->val)
+		return BinarySearch(root->left, target);
+	else
+		return BinarySearch(root->right, target);
+}
+
+// Binary Search on a list
+bool BinarySearch(vector<int>&list, int begin, int end, int target) {
+
+	if (end >= begin) {
+		int midpoint = begin + (end - begin) / 2;
+
+		if (list[midpoint] == target)
+			return true;
+		else if (list[midpoint] < target)
+			return BinarySearch(list, midpoint + 1, end, target);
+		else
+			return BinarySearch(list, begin, midpoint - 1, target);
+	}
+	else
+		return false;
 }
 
 // reverse a singly linked list
@@ -651,7 +758,7 @@ void LevelOrderTraversal(TreeNode *root) {
 		return;
 
 	// use a queue to store the TreeNodes
-	std::queue<TreeNode*> myqueue;
+	std::queue<TreeNode*> myqueue = {};
 	myqueue.push(root);
 
 	while (!myqueue.empty()) {
@@ -2629,13 +2736,18 @@ RotateMatrix(mat2);
 //TicTacToeGame *tictac = new TicTacToeGame(5);
 //cout << tictac->WhoWon() << endl;
 
-string output;
+//string output;
 //DecompressRec("2[2[cd]2[xy]]", output);
 //DecompressRec("2[ab2[xy]2[ab]]", output);
-DecompressRec("3[b2[ca]]", output);
+//DecompressRec("3[b2[ca]]", output);
 //DecompressRec("1[1[x]]", output);
+//cout << output << endl;
 
-cout << output << endl;
-
+vector<int>list = { 1,2,100, 101,102 };
+bool b = BinarySearch(list, 0, (int)list.size() - 1,122);
+if (b)  
+   cout << "found" << endl;
+else
+   cout << "not found" << endl;
 };
 
