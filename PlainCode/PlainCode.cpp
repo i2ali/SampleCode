@@ -1266,30 +1266,50 @@ bool substr1(char *sub, char *word) {
 
 }
 
+bool isdelimiter(const char s, const string &delim) {
+
+	int j = 0;
+	for (; j < delim.size(); ++j) {
+		if (s == delim[j]) {
+			return true;
+		}
+	} // for
+	return false;
+}
+
 // tokenizes a string delimited
 void mystrtok(const string &s, const string &delim, vector<string> &tok) {
 
 	int begin = 0;
-	int delimlen = delim.size();
-	bool delimmatch = false;
+	bool delimmatch = true;
+	int i = 0;
 
-	for (int i = 0; i < s.size(); ++i) {
+	while (i < s.size()) {
 
-			// walk through matching with delimiters
-			int j = 0;
-			for (; j < delimlen; ++j) {
-
-				if (s[i] == delim[j]) {
-					delimmatch = true;
-					tok.push_back(s.substr(begin, i - begin - 1));
-					begin = i + 1;
-					break;
-				}
-			} // for
-			if (j == delimlen)
+		// check delimiters
+		for (; (delimmatch==true) && (i < s.size()); ++i) {
+			if (isdelimiter(s[i], delim)) 
+				delimmatch = true;
+			else {
 				delimmatch = false;
+				break;
+			}
+		} // while
 
-	}
+		begin = i;
+
+		for (; delimmatch == false && i < s.size(); ++i) {
+			if (isdelimiter(s[i], delim)) {
+				delimmatch = true;
+				break;
+			}
+		} // while
+
+		if (delimmatch || i == s.size())
+			tok.push_back(s.substr(begin, i-begin));
+		 
+		i++;
+	} // while
 }
 
 // walking through linked list (singly), remove duplicates
@@ -2768,11 +2788,21 @@ RotateMatrix(mat2);
 //DecompressRec("1[1[x]]", output);
 //cout << output << endl;
 
+/*
 vector<int>list = { 1,2,100, 101,102 };
 bool b = BinarySearch(list, 0, (int)list.size() - 1,122);
 if (b)  
    cout << "found" << endl;
 else
    cout << "not found" << endl;
+*/
+
+vector <string> tokens;
+mystrtok("T    "," ", tokens);
+
+for (int i = 0; i < tokens.size(); ++i) {
+	cout << tokens[i] << endl;
+}
+
 };
 
