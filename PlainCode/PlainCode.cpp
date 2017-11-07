@@ -18,6 +18,7 @@ using namespace::std;
 #include <time.h>
 #include <queue>
 #include <stack>
+#include <set>
 
 typedef unsigned char BYTE;
 
@@ -1266,10 +1267,10 @@ bool substr1(char *sub, char *word) {
 
 }
 
+// given a char and a list of delimiters
 bool isdelimiter(const char s, const string &delim) {
 
-	int j = 0;
-	for (; j < delim.size(); ++j) {
+	for (int j=0; j < delim.size(); ++j) {
 		if (s == delim[j]) {
 			return true;
 		}
@@ -1277,39 +1278,70 @@ bool isdelimiter(const char s, const string &delim) {
 	return false;
 }
 
-// tokenizes a string delimited
+// tokenizes a string delimited by given delimiters
+// tok is passed and filled in with tokenized words
 void mystrtok(const string &s, const string &delim, vector<string> &tok) {
 
 	int begin = 0;
-	bool delimmatch = true;
-	int i = 0;
+	bool regseen = false;
+	bool delimseen = true;
 
-	while (i < s.size()) {
-
-		// check delimiters
-		for (; (delimmatch==true) && (i < s.size()); ++i) {
-			if (isdelimiter(s[i], delim)) 
-				delimmatch = true;
-			else {
-				delimmatch = false;
-				break;
+	for (int i = 0; (i < s.size()); ++i) {
+		   if (isdelimiter(s[i], delim) == true) {
+			   delimseen = true;
+			   if (regseen == true) { // delim seen, last time regular word was seen
+				   regseen = false;
+				   tok.push_back(s.substr(begin, i - begin));
+			   }			   
 			}
-		} // while
+		   else {  // reg word seen
+			   regseen = true;
+			   if (delimseen == true) { // reg seen, last time delim was seen
+				   delimseen = false;
+				   begin = i;
+			   }
+		   }
+	 } // for
+    
+	// if last character seen was a regchar, complete the word. If delimiter, we don't care
+	if (regseen)
+		tok.push_back(s.substr(begin, s.size() - begin));
 
-		begin = i;
+}
 
-		for (; delimmatch == false && i < s.size(); ++i) {
-			if (isdelimiter(s[i], delim)) {
-				delimmatch = true;
-				break;
+// tokenizes a string delimited by given delimiters
+// tok is passed and filled in with tokenized words
+// This version uses a set instead of calling delimiter
+void mystrtok1(const string &s, const set<char>&delim, vector<string> &tok) {
+
+	int begin = 0;
+	bool regseen = false;
+	bool delimseen = true;
+	set<char>::iterator it;
+
+	for (int i = 0; (i < s.size()); ++i) {
+
+		it = delim.find(s[i]);
+		if (!(it == delim.end())) {
+			delimseen = true;
+			if (regseen == true) { // delim seen, last time regular word was seen
+				regseen = false;
+				tok.push_back(s.substr(begin, i - begin));
 			}
-		} // while
+		}
+		else {  // reg word seen
+			regseen = true;
+			if (delimseen == true) { // reg seen, last time delim was seen
+				delimseen = false;
+				begin = i;
+			}
+		}
+	} // for
 
-		if (delimmatch || i == s.size())
-			tok.push_back(s.substr(begin, i-begin));
-		 
-		i++;
-	} // while
+	  // if last character seen was a regchar, complete the word. If delimiter, we don't care
+	if (regseen)
+		tok.push_back(s.substr(begin, s.size() - begin));
+
 }
 
 // walking through linked list (singly), remove duplicates
@@ -2798,7 +2830,16 @@ else
 */
 
 vector <string> tokens;
-mystrtok("T    "," ", tokens);
+mystrtok("-----This -is a very long stress test Booyah!!---------","- ,", tokens);
+
+for (int i = 0; i < tokens.size(); ++i) {
+	cout << tokens[i] << endl;
+}
+
+tokens.clear();
+
+set<char>delim = { ' ','-',',' };
+mystrtok1("-----This -is a very long stress test Booyah!!---------", delim, tokens);
 
 for (int i = 0; i < tokens.size(); ++i) {
 	cout << tokens[i] << endl;
