@@ -1266,8 +1266,33 @@ bool substr1(char *sub, char *word) {
 
 }
 
-// walking through linked list (singly), remove duplicates
+// tokenizes a string delimited
+void mystrtok(const string &s, const string &delim, vector<string> &tok) {
 
+	int begin = 0;
+	int delimlen = delim.size();
+	bool delimmatch = false;
+
+	for (int i = 0; i < s.size(); ++i) {
+
+			// walk through matching with delimiters
+			int j = 0;
+			for (; j < delimlen; ++j) {
+
+				if (s[i] == delim[j]) {
+					delimmatch = true;
+					tok.push_back(s.substr(begin, i - begin - 1));
+					begin = i + 1;
+					break;
+				}
+			} // for
+			if (j == delimlen)
+				delimmatch = false;
+
+	}
+}
+
+// walking through linked list (singly), remove duplicates
 void RemoveDuplicates(LinkedListNode *head) {
 
 	if (head == nullptr)
