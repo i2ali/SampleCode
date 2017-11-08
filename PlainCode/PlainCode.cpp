@@ -1442,6 +1442,59 @@ void reverse(char *str) {
 
 }
 
+// various operations on a square matrix
+class MatrixOps
+{
+public:
+	MatrixOps() {};
+	virtual ~MatrixOps() {};
+	void FlipAroundLeftDiagonal(vector<vector<int>> &matrix);
+	void FlipAroundRightDiagonal(vector<vector<int>> &matrix);
+	void PrintMatrix(vector<vector<int>> &matrix);
+};
+
+void MatrixOps::PrintMatrix(vector<vector<int>>& matrix) {
+	int n = (int)matrix.size();
+	cout << endl;
+	for (int i = 0; i < n; i++) {
+		cout << "| ";
+		for (int j = 0; j < matrix[i].size(); j++) {
+			cout << matrix[i][j] << " ";
+		}
+		cout << " |" << endl;
+	}
+}
+
+
+void MatrixOps::FlipAroundLeftDiagonal(vector<vector<int>> &matrix) {
+
+	int n = matrix.size();
+
+	for (int i = 0; i < n - 1; i++) {
+		int temp = 0;
+		for (int j = 1; j < n; j++) {
+			temp = matrix[j][i];
+			matrix[j][i] = matrix[i][j];
+			matrix[i][j] = temp;
+		}
+	}
+}
+
+void MatrixOps::FlipAroundRightDiagonal(vector<vector<int>>&matrix) {
+
+	int size = matrix.size();
+
+	for (int count = size - 1; count > 0; --count) {
+		int temp = 0;
+		for (int i = 0; i < count; i++) {
+			temp = matrix[size - count - 1][i];
+			matrix[size - count - 1][i] = matrix[size - i - 1][count];
+			matrix[size - i - 1][count] = temp;
+		}
+	}
+
+}
+
 /*
 Rotate Image:
 | 1 2 3 |     | 7 4 1 | 
@@ -2799,16 +2852,21 @@ for (int i = 0; i < size; i++) {
 delete [] primes;
 */
 
-/*cout << gcdfast(2336, 1314) << endl;
+/*cout << gcdfast(2336, 1314) << endl; */
 
 vector<vector<int>> mat1 = { {1,2,3},{4,5,6},{7,8,9} };
-
-RotateMatrix(mat1);
+MatrixOps *m = new MatrixOps();
+m->PrintMatrix(mat1);
+m->FlipAroundLeftDiagonal(mat1);
+m->PrintMatrix(mat1);
 
 vector<vector<int>> mat2 = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+m->PrintMatrix(mat2);
+m->FlipAroundLeftDiagonal(mat2);
+m->PrintMatrix(mat2);
 
-RotateMatrix(mat2);
-*/
+//RotateMatrix(mat2);
+
 
 //TicTacToeGame *tictac = new TicTacToeGame(5);
 //cout << tictac->WhoWon() << endl;
@@ -2829,6 +2887,7 @@ else
    cout << "not found" << endl;
 */
 
+/*
 vector <string> tokens;
 mystrtok("-----This -is a very long stress test Booyah!!---------","- ,", tokens);
 
@@ -2844,6 +2903,6 @@ mystrtok1("-----This -is a very long stress test Booyah!!---------", delim, toke
 for (int i = 0; i < tokens.size(); ++i) {
 	cout << tokens[i] << endl;
 }
-
+*/
 };
 
