@@ -603,17 +603,14 @@ bool isanagram(const string &s1, const string &s2) {
 
 	for (int i = 0; i < size; i++) {
 		got = table.find(s2[i]);
-		if ((got == table.end()) || (table[s2[i]] == 0))
+		if ((got == table.end()) || (table[s2[i]] <= 0))
 			return false; 
 		else {
 			table[s2[i]]--;
-			if (table[s2[i]] == 0)
-				table.erase(s2[i]);
 		}
 	}
 
-	// table must be empty now
-	return (table.size() == 0);
+	return true;
 }
 
 
@@ -2770,11 +2767,11 @@ Inorder visit order:
 //	cout << FindNumSum(10) << endl;
 //	FizzBuzzTest();
 
-
+/*
 // test code for isanagram
-//	bool flag =	isanagram("abcdefs", "fedcbaz");
-//	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
-
+	bool flag =	isanagram("a", "a");
+	(flag ? cout << "Anagram!" << endl : cout << "Not an anagram!" << endl);
+*/
 /*
 	if (isBSTInOrder(root))
 		cout << "Valid BST" << endl;
@@ -2874,7 +2871,7 @@ delete [] primes;
 */
 
 /*cout << gcdfast(2336, 1314) << endl; */
-
+/*
 vector<vector<int>> mat1 = { {1,2,3},{4,5,6},{7,8,9} };
 MatrixOps *m = new MatrixOps();
 m->PrintMatrix(mat1);
@@ -2885,7 +2882,7 @@ vector<vector<int>> mat2 = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
 m->PrintMatrix(mat2);
 m->FlipAroundLeftDiagonal(mat2);
 m->PrintMatrix(mat2);
-
+*/
 //RotateMatrix(mat2);
 
 
