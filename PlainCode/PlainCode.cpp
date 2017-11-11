@@ -1411,9 +1411,30 @@ void FindMthNodeinBST(TreeNode *root, int target, int *curr) {
 	FindMthNodeinBST(root->right, target, curr);
 }
 
+// s t e p
+// 0 1 2 3
 
+void reverse(string &s) {
+	if (s.empty()) {
+		return;
+    }
 
+	int size = s.length();
 
+	int begin = 0;
+	int end = size - 1;
+	char temp = ' ';
+
+	while (begin < end) {	
+		temp = s[begin];
+		s[begin] = s[end];
+		s[end] = temp;
+	
+		begin++;
+		end--;	
+	}
+
+}
 
 // assume a null terminated string
 // declare string as char str[] = "foobar";
