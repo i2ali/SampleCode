@@ -233,6 +233,105 @@ public:
 
 */
 
+
+class MyHeap {
+
+private:
+	vector <int> arr;
+	void BubbleDown(int index);
+	void BubbleUp(int index);
+	void Heapify();
+	void swapvalues(int index1, int index2) {
+		int temp = arr[index1];
+		arr[index1] = arr[index2];
+		arr[index2] = temp;	
+	}
+
+public:
+	MyHeap(const vector<int>&vector) {
+		arr = vector;
+		Heapify();
+	};
+	MyHeap(const int *array, int arrsize) {		
+		for (int i = 0; i < arrsize; i++) {
+			arr.push_back(array[i]);
+		}
+		Heapify();
+	}
+	virtual ~MyHeap() {}
+	int getmin() { return arr[0]; }
+	void insertElement(int val);
+	void DeleteMin();
+};
+
+// delete value and swap with last value in array, which you then BubbleDown
+void MyHeap::DeleteMin() {
+
+	if (arr.size() == 0) return;
+	arr[0] = arr[arr.size() - 1];
+	arr.pop_back();
+
+	BubbleDown(0);	
+
+}
+
+// swap with parent vals until meets heap property
+void MyHeap::BubbleUp(int index) {
+
+	if (index == 0)
+		return;
+
+	int parentindex = (int)((index - 1)/2);
+
+	if (arr[parentindex] > arr[index]) {
+		swapvalues(index, parentindex);
+		BubbleUp(parentindex);
+	}
+
+}
+
+// swap value down heap until it meets min heap property
+void MyHeap::BubbleDown(int index) {	
+	int leftindex = index * 2 + 1;
+	int rightindex = index * 2 + 2;
+
+	// leaf node 
+	if (leftindex >= arr.size()) {
+		return;
+	}
+
+	int minindex = index;
+
+	if (arr[index] > arr[leftindex]) {
+		minindex = leftindex;
+	}
+
+	if ((rightindex >= arr.size()) && (arr[minindex] > arr[rightindex]))
+		minindex = rightindex;
+
+	if (minindex != index) {
+		swapvalues(index, minindex);
+		BubbleDown(minindex);
+	}
+}
+
+void MyHeap::insertElement(int val) {
+	arr.push_back(val);
+	BubbleUp(arr.size());
+}
+
+// basically bubble down each value to meet overall heap property
+void MyHeap::Heapify() {
+	int len = arr.size();
+
+	for (int i = 0; i < len; i++) {
+		BubbleDown(i);	
+	}
+
+}
+
+
+
 class LinkedListNode {
 public:
 	int _val;
@@ -660,18 +759,18 @@ return ' ';
 
 // Given an array of integers, find max subarray sum (for contigous elements) 
 // use Kadane's algorithm
-// TODO: Add variation if list is sorted
+// Note if list is sorted, we would simply skip ahead to positive segment and sum everything there
 int longestsubarray(int test[], int size) {
-
-	int max_so_far = 0;
-	int max_ending_here = 0;
 
 	if (size < 1)
 		return 0;
 
-	for (int i = 0; i<size; i++) {
+	int max_so_far = 0;
+	int max_ending_here = 0;
 
-		max_ending_here = max_ending_here + test[i];
+	for (int i = 0; i < size; i++) {
+
+		max_ending_here += test[i];
 
 		if (max_ending_here < 0)
 			max_ending_here = 0;
