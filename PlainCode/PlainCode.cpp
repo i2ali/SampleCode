@@ -57,7 +57,7 @@ void minDiffInBSTWrapper(TreeNode* root, int &prev, int &min) {
 
 	minDiffInBSTWrapper(root->left, prev, min);
 
-	min = abs(std::min(prev - root->_data, min));
+	min = std::min(root->_data - prev, min);
 	prev = root->_data;
 
 	minDiffInBSTWrapper(root->right, prev, min);
@@ -66,7 +66,7 @@ void minDiffInBSTWrapper(TreeNode* root, int &prev, int &min) {
 
 
 int minDiffInBST(TreeNode* root) {
-	int prev = INT_MAX;
+	int prev = INT_MIN/2;   //TODO: guard against overflow above where we calculating min
 	int min = INT_MAX;
 	minDiffInBSTWrapper(root,prev,min);
 	return min;
@@ -2910,7 +2910,7 @@ Inorder visit order:
 	if (tree1 == nullptr)
 		cout << "Empty Tree!" << endl;
 	Traversals(tree1, Inorder);
-	*/
+	
 	min = 5;
 	max = 26;
 	cout << "Min: " << min << "Max: " << max << endl;
@@ -2918,7 +2918,7 @@ Inorder visit order:
 	if (tree2 == nullptr)
 		cout << "Empty Tree!" << endl;
 	Traversals(tree2, Inorder);
-
+*/
 /* Test code for reversestring()
 
 	char str[] = "ABD";
