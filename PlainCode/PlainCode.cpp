@@ -34,6 +34,43 @@ public:
 	}
 };
 
+/*
+bool isBSTInOrderHelper(TreeNode *p, int& prev) {
+	if (!p) return true;
+
+	if ((isBSTInOrderHelper(p->left, prev)) && (p->_data > prev))
+		return isBSTInOrderHelper(p->right, p->_data);
+	else
+		return false;
+}
+
+bool isBSTInOrder(TreeNode *root) {
+	int prev = INT_MIN;
+	return isBSTInOrderHelper(root, prev);
+}
+*/
+
+void minDiffInBSTWrapper(TreeNode* root, int &prev, int &min) {
+
+	if (root == nullptr)
+		return;
+
+	minDiffInBSTWrapper(root->left, prev, min);
+
+	min = abs(std::min(prev - root->_data, min));
+	prev = root->_data;
+
+	minDiffInBSTWrapper(root->right, prev, min);
+
+}
+
+
+int minDiffInBST(TreeNode* root) {
+	int prev = INT_MAX;
+	int min = INT_MAX;
+	minDiffInBSTWrapper(root,prev,min);
+	return min;
+}
 
 // Determine if there exists a sum in a binary tree
 bool CalcSum(TreeNode *root, int sum) {
@@ -1834,6 +1871,39 @@ int FindNumSum(int n) {
 
 }
 
+
+TreeNode *TrimBST1(TreeNode *root, int min, int max) {
+
+	if (root == nullptr)
+		return nullptr;
+
+	if ((root->_data >= min) && (root->_data <= max)) {
+		root->left = TrimBST1(root->left, min, root->_data);
+		root->right = TrimBST1(root->right, root->_data, max);
+		return root;
+	}
+
+	else if (root->_data < min) {
+
+/*		TreeNode *temp = nullptr;
+		temp = root->right;
+		delete root;
+		return temp;
+		*/
+		return TrimBST1(root->right, min, max);
+	}
+	else {
+/*		TreeNode *temp = nullptr;
+		temp = root->left;
+		delete root;
+		return temp;
+		*/
+		return TrimBST1(root->left, min, max);
+	}
+
+}
+
+
 // Given a BST and 2 values(min, max) trim the tree such that all values are between min / max and still a valid BST
 // Post-order traversal allows you to fix the subtrees, then visit the root
 TreeNode *TrimBST(TreeNode *root, int min, int max) {
@@ -2782,7 +2852,7 @@ Inorder visit order:
 	q.enqueue(5);
 	cout << q.dequeue() << endl;
 */
-/*			  15
+//			  15
 //		  8        20
 //		6   9    19   25
 //     5     10     22  26
@@ -2798,7 +2868,7 @@ Inorder visit order:
 	root->right->right = new TreeNode(25);
 	root->right->right->left = new TreeNode(22);
 	root->right->right->right = new TreeNode(26);
-*/
+
 /*	if (heightbalanced(root))
 		cout << "Height balanced!" << endl;
 	else 
@@ -2825,11 +2895,30 @@ Inorder visit order:
 	FindMthNodeinBST(root, 2, &curr);
 	curr = 0;
 	FindMthNodeinBST(root, 9, &curr);
-
-	TreeNode *tree = TrimBST(root, 8, 17);
-	Traversals(tree, Inorder);
-	delete tree;
 */
+	
+	int min = 8;
+	int max = 17;
+/*	cout << "Min: " << min << "Max: " << max << endl;
+	TreeNode *tree = TrimBST1(root, min, max);
+	Traversals(tree, Inorder);
+	
+    min = 1;
+	max = 2;
+	cout << "Min: " << min << "Max: " << max << endl;
+	TreeNode *tree1 = TrimBST1(root, min, max);
+	if (tree1 == nullptr)
+		cout << "Empty Tree!" << endl;
+	Traversals(tree1, Inorder);
+	*/
+	min = 5;
+	max = 26;
+	cout << "Min: " << min << "Max: " << max << endl;
+	TreeNode *tree2 = TrimBST1(root, min, max);
+	if (tree2 == nullptr)
+		cout << "Empty Tree!" << endl;
+	Traversals(tree2, Inorder);
+
 /* Test code for reversestring()
 
 	char str[] = "ABD";
@@ -3021,5 +3110,14 @@ for (int i = 0; i < tokens.size(); ++i) {
 	cout << tokens[i] << endl;
 }
 */
+
+TreeNode *root1 = new TreeNode(99);
+root1->left = new TreeNode(84);
+root1->left->left = new TreeNode(27);
+root1->left->left->left = new TreeNode(1);
+root1->left->left->right = new TreeNode(53);
+
+cout << minDiffInBST(root1) << endl;
+
 };
 
