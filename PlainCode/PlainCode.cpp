@@ -35,20 +35,31 @@ public:
 };
 
 /*
-bool isBSTInOrderHelper(TreeNode *p, int& prev) {
-	if (!p) return true;
-
-	if ((isBSTInOrderHelper(p->left, prev)) && (p->_data > prev))
-		return isBSTInOrderHelper(p->right, p->_data);
-	else
-		return false;
-}
-
-bool isBSTInOrder(TreeNode *root) {
-	int prev = INT_MIN;
-	return isBSTInOrderHelper(root, prev);
-}
+PROBLEM: given an upside tree (i.e. DOM), convert it back to HTML stream
 */
+
+// build HTML stream
+class HTMLBuilder {
+private:
+	string htmlstream;
+	string default = "<html><head><title></title></head><body><h1></h1><p></p></body></html>";
+public:
+	void AddtoStream(string stream);
+	HTMLBuilder() {};
+};
+
+// TO DO: add operator overrides
+void HTMLBuilder::AddtoStream(string stream)
+{
+	htmlstream += stream;
+}
+
+class UpsideDownNode {
+	UpsideDownNode() { parent = nullptr; }
+	UpsideDownNode(string tag) { tagname = tag; }
+	UpsideDownNode *parent;
+	string tagname;
+};
 
 void minDiffInBSTWrapper(TreeNode* root, int &prev, int &min) {
 
@@ -61,9 +72,7 @@ void minDiffInBSTWrapper(TreeNode* root, int &prev, int &min) {
 	prev = root->_data;
 
 	minDiffInBSTWrapper(root->right, prev, min);
-
 }
-
 
 int minDiffInBST(TreeNode* root) {
 	int prev = INT_MIN/2;   //TODO: guard against overflow above where we calculating min
