@@ -942,7 +942,7 @@ For smaller memory, store as much possible in one bitarray, and tighten the rang
 /*
 Minimum number of squares whose sum equals to given number n
 A number can always be represented as a sum of squares of other numbers. Note
-that 1 is a square and we can always break a number as (1*1 + 1*1 + 1*1 + …).
+that 1 is a square and we can always break a number as (1*1 + 1*1 + 1*1 + Â…).
 Given a number n, find the minimum number of squares that sum to X.
 */
 
@@ -1098,7 +1098,7 @@ bool * returnPrimes(int numprime, size_t &size) {
 
 
 /*
-Flood fill Algorithm – how to implement fill() in paint?
+Flood fill Algorithm Â– how to implement fill() in paint?
 In MS-Paint, when we take the brush to a pixel and click, the color of the
 region of that pixel is replaced with a new selected color. Following is the
 problem statement to do this task.
@@ -1532,7 +1532,7 @@ Given a collection of words, find which of the words exist in a matrix of letter
 
 Example:
 
-Given the matrix bellow, find the words “ALL” and “LOAN”
+Given the matrix bellow, find the words Â“ALLÂ” and Â“LOANÂ”
 
 */
 
@@ -1943,6 +1943,25 @@ TreeNode *TrimBST(TreeNode *root, int min, int max) {
 	return root;
 }
 
+/*
+Java solution using pre-order technique
+
+class Solution {
+	public TreeNode trimTree(TreeNode node, int min, int max) {
+		if (node == null) { return null; }
+if (node.val < min) {
+	return executeTreeTrim(node.right, min, max);
+}
+if (node.val > max ) {
+	return executeTreeTrim(node.left, min, max);
+}
+		node.left = executeTreeTrim(node.left, min, max);
+		node.right = executeTreeTrim(node.right, min, max);
+		return node;
+	}
+}
+*/
+
 TreeNode *searchNode(int key, TreeNode *root,TreeNode **parent) {
 
 	if (root == nullptr) return nullptr;
@@ -2114,7 +2133,7 @@ int remDupes(int *a, int size) {
 
 // lowest common ancestor in a tree
 
-// Implement data structure “Map” storing pairs of integers (key, value) and define 
+// Implement data structure Â“MapÂ” storing pairs of integers (key, value) and define 
 // following member functions in O(1) runtime: void insert(key, value), void delete(key), 
 // int get(key), int getRandomKey().
 
