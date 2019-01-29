@@ -1912,6 +1912,16 @@ TreeNode *TrimBST1(TreeNode *root, int min, int max) {
 
 }
 
+/****** 
+Examples:
+       8
+   6      10
+ 4   5  9    12
+min, max = [5,9]
+      8
+   6     9
+     5      
+*******/
 
 // Given a BST and 2 values(min, max) trim the tree such that all values are between min / max and still a valid BST
 // Post-order traversal allows you to fix the subtrees, then visit the root
